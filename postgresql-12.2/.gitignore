@@ -43,4 +43,4 @@ lib*.pc
 /Release/
 /tmp_install/
 
-postgres_install/*
+**postgres_install
