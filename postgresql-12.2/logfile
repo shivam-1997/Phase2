@@ -1,0 +1,27 @@
+2020-02-18 07:32:40.442 GMT [32154] LOG:  unrecognized configuration parameter "isten_addresses" in file "/home/shivam/IIT/MTP/Phase2/postgres_install/data/postgresql.conf" line 59
+2020-02-18 07:32:40.442 GMT [32154] FATAL:  configuration file "/home/shivam/IIT/MTP/Phase2/postgres_install/data/postgresql.conf" contains errors
+2020-02-18 07:33:36.691 GMT [32167] LOG:  unrecognized configuration parameter "isten_addresses" in file "/home/shivam/IIT/MTP/Phase2/postgres_install/data/postgresql.conf" line 59
+2020-02-18 07:33:36.691 GMT [32167] FATAL:  configuration file "/home/shivam/IIT/MTP/Phase2/postgres_install/data/postgresql.conf" contains errors
+2020-02-18 07:34:13.842 GMT [32193] LOG:  unrecognized configuration parameter "isten_addresses" in file "/home/shivam/IIT/MTP/Phase2/postgres_install/data/postgresql.conf" line 59
+2020-02-18 07:34:13.842 GMT [32193] FATAL:  configuration file "/home/shivam/IIT/MTP/Phase2/postgres_install/data/postgresql.conf" contains errors
+2020-02-18 13:04:20.644 IST [32199] LOG:  starting PostgreSQL 12.2 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit
+2020-02-18 13:04:20.645 IST [32199] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2020-02-18 13:04:20.692 IST [32199] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2020-02-18 13:04:20.793 IST [32200] LOG:  database system was shut down at 2020-02-18 12:58:24 IST
+2020-02-18 13:04:20.818 IST [32199] LOG:  database system is ready to accept connections
+2020-02-18 13:04:33.905 IST [32199] LOG:  received fast shutdown request
+2020-02-18 13:04:33.945 IST [32199] LOG:  aborting any active transactions
+2020-02-18 13:04:33.945 IST [32199] LOG:  background worker "logical replication launcher" (PID 32206) exited with exit code 1
+2020-02-18 13:04:33.946 IST [32201] LOG:  shutting down
+2020-02-18 13:04:34.107 IST [32199] LOG:  database system is shut down
+2020-02-18 13:05:07.094 IST [32227] LOG:  starting PostgreSQL 12.2 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0, 64-bit
+2020-02-18 13:05:07.094 IST [32227] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+2020-02-18 13:05:07.094 IST [32227] LOG:  listening on IPv6 address "::", port 5432
+2020-02-18 13:05:07.143 IST [32227] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2020-02-18 13:05:07.236 IST [32228] LOG:  database system was shut down at 2020-02-18 13:04:34 IST
+2020-02-18 13:05:07.259 IST [32227] LOG:  database system is ready to accept connections
+2020-02-18 13:09:41.814 IST [32227] LOG:  received fast shutdown request
+2020-02-18 13:09:41.842 IST [32227] LOG:  aborting any active transactions
+2020-02-18 13:09:41.844 IST [32227] LOG:  background worker "logical replication launcher" (PID 32234) exited with exit code 1
+2020-02-18 13:09:41.844 IST [32229] LOG:  shutting down
+2020-02-18 13:09:42.009 IST [32227] LOG:  database system is shut down
