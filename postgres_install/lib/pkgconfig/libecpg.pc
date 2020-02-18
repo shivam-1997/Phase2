@@ -1,9 +1,0 @@
-Name: libecpg
-Description: PostgreSQL libecpg library
-Url: http://www.postgresql.org/
-Version: 12.2
-Requires: 
-Requires.private: libpq libpgtypes
-Cflags: -I/home/shivam/IIT/MTP/Phase2/postgres_install/include
-Libs: -L/home/shivam/IIT/MTP/Phase2/postgres_install/lib -lecpg
-Libs.private:  -lm
