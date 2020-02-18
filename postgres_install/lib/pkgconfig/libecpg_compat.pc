@@ -1,0 +1,9 @@
+Name: libecpg_compat
+Description: PostgreSQL libecpg_compat library
+Url: http://www.postgresql.org/
+Version: 12.2
+Requires: 
+Requires.private: libecpg libpgtypes
+Cflags: -I/home/shivam/IIT/MTP/Phase2/postgres_install/include
+Libs: -L/home/shivam/IIT/MTP/Phase2/postgres_install/lib -lecpg_compat
+Libs.private:  -lm

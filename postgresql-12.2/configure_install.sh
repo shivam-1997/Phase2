@@ -1,6 +1,7 @@
 #! /bin/sh
 
-DIR=~
+DIR="/home/shivam/IIT/MTP/Phase2"
+sudo apt-get install libreadline6-dev zlib1g-dev bison flex
 
 if [ -d "$FILE" ]; then
     echo "$DIR exists."
@@ -9,7 +10,7 @@ else
     echo "$DIR created."
 fi
 
-export POSTGRES_INSTALLDIR="$DIR/postgres" 
+export POSTGRES_INSTALLDIR="$DIR/postgres_install" 
 
 # export POSTGRES_SRCDIR="."
 # cd ${POSTGRES_SRCDIR}
@@ -17,8 +18,6 @@ export POSTGRES_INSTALLDIR="$DIR/postgres"
 ./configure --prefix=${POSTGRES_INSTALLDIR} --enable-debug
 export enable_debug=yes
 
-
-sudo apt-get install libreadline6-dev zlib1g-dev bison flex
 
 make | tee gmake.out
 make install | tee gmake_install.out

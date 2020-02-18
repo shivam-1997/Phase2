@@ -15,15 +15,15 @@ make -C src install
 make[1]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src'
 make -C common install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 644  libpgcommon.a '/home/shivam/postgres/lib/libpgcommon.a'
-/usr/bin/install -c -m 644  libpgcommon_shlib.a '/home/shivam/postgres/lib/libpgcommon_shlib.a'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 644  libpgcommon.a '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libpgcommon.a'
+/usr/bin/install -c -m 644  libpgcommon_shlib.a '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libpgcommon_shlib.a'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make -C port install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/port'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 644  libpgport.a '/home/shivam/postgres/lib/libpgport.a'
-/usr/bin/install -c -m 644  libpgport_shlib.a '/home/shivam/postgres/lib/libpgport_shlib.a'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 644  libpgport.a '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libpgport.a'
+/usr/bin/install -c -m 644  libpgport_shlib.a '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libpgport_shlib.a'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/port'
 make -C timezone install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/timezone'
@@ -35,13 +35,13 @@ make -C ../../src/common all
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[3]: Nothing to be done for 'all'.
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/share'
-./zic -d '/home/shivam/postgres/share/timezone' -p 'US/Eastern'  ./data/tzdata.zi
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/share'
+./zic -d '/home/shivam/IIT/MTP/Phase2/postgres_install/share/timezone' -p 'US/Eastern'  ./data/tzdata.zi
 make -C tznames install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/timezone/tznames'
-/bin/mkdir -p '/home/shivam/postgres/share/timezonesets'
-/usr/bin/install -c -m 644 ./Africa.txt ./America.txt ./Antarctica.txt ./Asia.txt ./Atlantic.txt ./Australia.txt ./Etc.txt ./Europe.txt ./Indian.txt ./Pacific.txt '/home/shivam/postgres/share/timezonesets'
-/usr/bin/install -c -m 644 ./Default ./Australia ./India '/home/shivam/postgres/share/timezonesets'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/share/timezonesets'
+/usr/bin/install -c -m 644 ./Africa.txt ./America.txt ./Antarctica.txt ./Asia.txt ./Atlantic.txt ./Australia.txt ./Etc.txt ./Europe.txt ./Indian.txt ./Pacific.txt '/home/shivam/IIT/MTP/Phase2/postgres_install/share/timezonesets'
+/usr/bin/install -c -m 644 ./Default ./Australia ./India '/home/shivam/IIT/MTP/Phase2/postgres_install/share/timezonesets'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/timezone/tznames'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/timezone'
 make -C backend install
@@ -326,9 +326,9 @@ make -C jit all
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/jit'
 make[3]: Nothing to be done for 'all'.
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/jit'
-/bin/mkdir -p '/home/shivam/postgres/bin' '/home/shivam/postgres/share'
-/usr/bin/install -c  postgres '/home/shivam/postgres/bin/postgres'
-ln -s postgres '/home/shivam/postgres/bin/postmaster'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin' '/home/shivam/IIT/MTP/Phase2/postgres_install/share'
+/usr/bin/install -c  postgres '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/postgres'
+ln -s postgres '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/postmaster'
 make -C access install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/access'
 make -C brin install
@@ -586,13 +586,13 @@ make -C ../../src/common all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/share'
-./zic -d '/home/shivam/postgres/share/timezone' -p 'US/Eastern'  ./data/tzdata.zi
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/share'
+./zic -d '/home/shivam/IIT/MTP/Phase2/postgres_install/share/timezone' -p 'US/Eastern'  ./data/tzdata.zi
 make -C tznames install
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/timezone/tznames'
-/bin/mkdir -p '/home/shivam/postgres/share/timezonesets'
-/usr/bin/install -c -m 644 ./Africa.txt ./America.txt ./Antarctica.txt ./Asia.txt ./Atlantic.txt ./Australia.txt ./Etc.txt ./Europe.txt ./Indian.txt ./Pacific.txt '/home/shivam/postgres/share/timezonesets'
-/usr/bin/install -c -m 644 ./Default ./Australia ./India '/home/shivam/postgres/share/timezonesets'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/share/timezonesets'
+/usr/bin/install -c -m 644 ./Africa.txt ./America.txt ./Antarctica.txt ./Asia.txt ./Atlantic.txt ./Australia.txt ./Etc.txt ./Europe.txt ./Indian.txt ./Pacific.txt '/home/shivam/IIT/MTP/Phase2/postgres_install/share/timezonesets'
+/usr/bin/install -c -m 644 ./Default ./Australia ./India '/home/shivam/IIT/MTP/Phase2/postgres_install/share/timezonesets'
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/timezone/tznames'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/timezone'
 make -C jit install
@@ -601,195 +601,195 @@ make[3]: Nothing to be done for 'install'.
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/jit'
 make -C catalog install-data
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/catalog'
-/bin/mkdir -p '/home/shivam/postgres/share'
-/usr/bin/install -c -m 644 `for f in ./postgres.bki; do test -r $f && echo $f && break; done` '/home/shivam/postgres/share/postgres.bki'
-/usr/bin/install -c -m 644 `for f in ./postgres.description; do test -r $f && echo $f && break; done` '/home/shivam/postgres/share/postgres.description'
-/usr/bin/install -c -m 644 `for f in ./postgres.shdescription; do test -r $f && echo $f && break; done` '/home/shivam/postgres/share/postgres.shdescription'
-/usr/bin/install -c -m 644 ./system_views.sql '/home/shivam/postgres/share/system_views.sql'
-/usr/bin/install -c -m 644 ./information_schema.sql '/home/shivam/postgres/share/information_schema.sql'
-/usr/bin/install -c -m 644 ./sql_features.txt '/home/shivam/postgres/share/sql_features.txt'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/share'
+/usr/bin/install -c -m 644 `for f in ./postgres.bki; do test -r $f && echo $f && break; done` '/home/shivam/IIT/MTP/Phase2/postgres_install/share/postgres.bki'
+/usr/bin/install -c -m 644 `for f in ./postgres.description; do test -r $f && echo $f && break; done` '/home/shivam/IIT/MTP/Phase2/postgres_install/share/postgres.description'
+/usr/bin/install -c -m 644 `for f in ./postgres.shdescription; do test -r $f && echo $f && break; done` '/home/shivam/IIT/MTP/Phase2/postgres_install/share/postgres.shdescription'
+/usr/bin/install -c -m 644 ./system_views.sql '/home/shivam/IIT/MTP/Phase2/postgres_install/share/system_views.sql'
+/usr/bin/install -c -m 644 ./information_schema.sql '/home/shivam/IIT/MTP/Phase2/postgres_install/share/information_schema.sql'
+/usr/bin/install -c -m 644 ./sql_features.txt '/home/shivam/IIT/MTP/Phase2/postgres_install/share/sql_features.txt'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/catalog'
 make -C tsearch install-data
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/tsearch'
-/bin/mkdir -p '/home/shivam/postgres/share' '/home/shivam/postgres/share/tsearch_data'
-/usr/bin/install -c -m 644 ./dicts/synonym_sample.syn ./dicts/thesaurus_sample.ths ./dicts/hunspell_sample.affix ./dicts/ispell_sample.affix ./dicts/ispell_sample.dict ./dicts/hunspell_sample_long.affix ./dicts/hunspell_sample_long.dict ./dicts/hunspell_sample_num.affix ./dicts/hunspell_sample_num.dict '/home/shivam/postgres/share/tsearch_data/'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/share' '/home/shivam/IIT/MTP/Phase2/postgres_install/share/tsearch_data'
+/usr/bin/install -c -m 644 ./dicts/synonym_sample.syn ./dicts/thesaurus_sample.ths ./dicts/hunspell_sample.affix ./dicts/ispell_sample.affix ./dicts/ispell_sample.dict ./dicts/hunspell_sample_long.affix ./dicts/hunspell_sample_long.dict ./dicts/hunspell_sample_num.affix ./dicts/hunspell_sample_num.dict '/home/shivam/IIT/MTP/Phase2/postgres_install/share/tsearch_data/'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/tsearch'
 make -C utils install-data
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils'
-/bin/mkdir -p '/home/shivam/postgres/share'
-/usr/bin/install -c -m 644 ./errcodes.txt '/home/shivam/postgres/share/errcodes.txt'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/share'
+/usr/bin/install -c -m 644 ./errcodes.txt '/home/shivam/IIT/MTP/Phase2/postgres_install/share/errcodes.txt'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils'
-/usr/bin/install -c -m 644 ./libpq/pg_hba.conf.sample '/home/shivam/postgres/share/pg_hba.conf.sample'
-/usr/bin/install -c -m 644 ./libpq/pg_ident.conf.sample '/home/shivam/postgres/share/pg_ident.conf.sample'
-/usr/bin/install -c -m 644 ./utils/misc/postgresql.conf.sample '/home/shivam/postgres/share/postgresql.conf.sample'
+/usr/bin/install -c -m 644 ./libpq/pg_hba.conf.sample '/home/shivam/IIT/MTP/Phase2/postgres_install/share/pg_hba.conf.sample'
+/usr/bin/install -c -m 644 ./libpq/pg_ident.conf.sample '/home/shivam/IIT/MTP/Phase2/postgres_install/share/pg_ident.conf.sample'
+/usr/bin/install -c -m 644 ./utils/misc/postgresql.conf.sample '/home/shivam/IIT/MTP/Phase2/postgres_install/share/postgresql.conf.sample'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend'
 make -C backend/utils/mb/conversion_procs install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs'
 make -C ascii_and_mic install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/ascii_and_mic'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  ascii_and_mic.so '/home/shivam/postgres/lib/ascii_and_mic.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  ascii_and_mic.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/ascii_and_mic.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/ascii_and_mic'
 make -C cyrillic_and_mic install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/cyrillic_and_mic'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  cyrillic_and_mic.so '/home/shivam/postgres/lib/cyrillic_and_mic.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  cyrillic_and_mic.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/cyrillic_and_mic.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/cyrillic_and_mic'
 make -C euc_cn_and_mic install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/euc_cn_and_mic'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  euc_cn_and_mic.so '/home/shivam/postgres/lib/euc_cn_and_mic.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  euc_cn_and_mic.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/euc_cn_and_mic.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/euc_cn_and_mic'
 make -C euc_jp_and_sjis install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/euc_jp_and_sjis'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  euc_jp_and_sjis.so '/home/shivam/postgres/lib/euc_jp_and_sjis.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  euc_jp_and_sjis.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/euc_jp_and_sjis.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/euc_jp_and_sjis'
 make -C euc_kr_and_mic install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/euc_kr_and_mic'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  euc_kr_and_mic.so '/home/shivam/postgres/lib/euc_kr_and_mic.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  euc_kr_and_mic.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/euc_kr_and_mic.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/euc_kr_and_mic'
 make -C euc_tw_and_big5 install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/euc_tw_and_big5'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  euc_tw_and_big5.so '/home/shivam/postgres/lib/euc_tw_and_big5.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  euc_tw_and_big5.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/euc_tw_and_big5.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/euc_tw_and_big5'
 make -C latin2_and_win1250 install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/latin2_and_win1250'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  latin2_and_win1250.so '/home/shivam/postgres/lib/latin2_and_win1250.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  latin2_and_win1250.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/latin2_and_win1250.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/latin2_and_win1250'
 make -C latin_and_mic install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/latin_and_mic'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  latin_and_mic.so '/home/shivam/postgres/lib/latin_and_mic.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  latin_and_mic.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/latin_and_mic.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/latin_and_mic'
 make -C utf8_and_ascii install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_ascii'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_ascii.so '/home/shivam/postgres/lib/utf8_and_ascii.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_ascii.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_ascii.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_ascii'
 make -C utf8_and_big5 install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_big5'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_big5.so '/home/shivam/postgres/lib/utf8_and_big5.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_big5.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_big5.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_big5'
 make -C utf8_and_cyrillic install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_cyrillic'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_cyrillic.so '/home/shivam/postgres/lib/utf8_and_cyrillic.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_cyrillic.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_cyrillic.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_cyrillic'
 make -C utf8_and_euc_cn install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_euc_cn'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_euc_cn.so '/home/shivam/postgres/lib/utf8_and_euc_cn.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_euc_cn.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_euc_cn.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_euc_cn'
 make -C utf8_and_euc_jp install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_euc_jp'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_euc_jp.so '/home/shivam/postgres/lib/utf8_and_euc_jp.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_euc_jp.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_euc_jp.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_euc_jp'
 make -C utf8_and_euc_kr install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_euc_kr'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_euc_kr.so '/home/shivam/postgres/lib/utf8_and_euc_kr.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_euc_kr.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_euc_kr.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_euc_kr'
 make -C utf8_and_euc_tw install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_euc_tw'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_euc_tw.so '/home/shivam/postgres/lib/utf8_and_euc_tw.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_euc_tw.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_euc_tw.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_euc_tw'
 make -C utf8_and_gb18030 install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_gb18030'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_gb18030.so '/home/shivam/postgres/lib/utf8_and_gb18030.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_gb18030.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_gb18030.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_gb18030'
 make -C utf8_and_gbk install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_gbk'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_gbk.so '/home/shivam/postgres/lib/utf8_and_gbk.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_gbk.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_gbk.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_gbk'
 make -C utf8_and_iso8859 install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_iso8859'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_iso8859.so '/home/shivam/postgres/lib/utf8_and_iso8859.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_iso8859.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_iso8859.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_iso8859'
 make -C utf8_and_iso8859_1 install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_iso8859_1'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_iso8859_1.so '/home/shivam/postgres/lib/utf8_and_iso8859_1.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_iso8859_1.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_iso8859_1.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_iso8859_1'
 make -C utf8_and_johab install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_johab'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_johab.so '/home/shivam/postgres/lib/utf8_and_johab.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_johab.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_johab.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_johab'
 make -C utf8_and_sjis install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_sjis'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_sjis.so '/home/shivam/postgres/lib/utf8_and_sjis.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_sjis.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_sjis.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_sjis'
 make -C utf8_and_win install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_win'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_win.so '/home/shivam/postgres/lib/utf8_and_win.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_win.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_win.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_win'
 make -C utf8_and_uhc install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_uhc'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_uhc.so '/home/shivam/postgres/lib/utf8_and_uhc.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_uhc.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_uhc.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_uhc'
 make -C utf8_and_euc2004 install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_euc2004'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_euc2004.so '/home/shivam/postgres/lib/utf8_and_euc2004.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_euc2004.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_euc2004.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_euc2004'
 make -C utf8_and_sjis2004 install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_sjis2004'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  utf8_and_sjis2004.so '/home/shivam/postgres/lib/utf8_and_sjis2004.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  utf8_and_sjis2004.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/utf8_and_sjis2004.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/utf8_and_sjis2004'
 make -C euc2004_sjis2004 install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/euc2004_sjis2004'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  euc2004_sjis2004.so '/home/shivam/postgres/lib/euc2004_sjis2004.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  euc2004_sjis2004.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/euc2004_sjis2004.so'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs/euc2004_sjis2004'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/utils/mb/conversion_procs'
 make -C backend/snowball install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/snowball'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/bin/mkdir -p '/home/shivam/postgres/share' '/home/shivam/postgres/share/tsearch_data'
-/usr/bin/install -c -m 755  dict_snowball.so '/home/shivam/postgres/lib/dict_snowball.so'
-/usr/bin/install -c -m 644 snowball_create.sql '/home/shivam/postgres/share'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/share' '/home/shivam/IIT/MTP/Phase2/postgres_install/share/tsearch_data'
+/usr/bin/install -c -m 755  dict_snowball.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/dict_snowball.so'
+/usr/bin/install -c -m 644 snowball_create.sql '/home/shivam/IIT/MTP/Phase2/postgres_install/share'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/snowball'
 make -C include install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/include'
-/bin/mkdir -p '/home/shivam/postgres/include/libpq' '/home/shivam/postgres/include/internal/libpq'
-/bin/mkdir -p '/home/shivam/postgres/include/server'/access '/home/shivam/postgres/include/server'/bootstrap '/home/shivam/postgres/include/server'/catalog '/home/shivam/postgres/include/server'/commands '/home/shivam/postgres/include/server'/common '/home/shivam/postgres/include/server'/datatype '/home/shivam/postgres/include/server'/executor '/home/shivam/postgres/include/server'/fe_utils '/home/shivam/postgres/include/server'/foreign '/home/shivam/postgres/include/server'/jit '/home/shivam/postgres/include/server'/lib '/home/shivam/postgres/include/server'/libpq '/home/shivam/postgres/include/server'/mb '/home/shivam/postgres/include/server'/nodes '/home/shivam/postgres/include/server'/optimizer '/home/shivam/postgres/include/server'/parser '/home/shivam/postgres/include/server'/partitioning '/home/shivam/postgres/include/server'/postmaster '/home/shivam/postgres/include/server'/regex '/home/shivam/postgres/include/server'/replication '/home/shivam/postgres/include/server'/rewrite '/home/shivam/postgres/include/server'/statistics '/home/shivam/postgres/include/server'/storage '/home/shivam/postgres/include/server'/tcop '/home/shivam/postgres/include/server'/snowball '/home/shivam/postgres/include/server'/snowball/libstemmer '/home/shivam/postgres/include/server'/tsearch '/home/shivam/postgres/include/server'/tsearch/dicts '/home/shivam/postgres/include/server'/utils '/home/shivam/postgres/include/server'/port '/home/shivam/postgres/include/server'/port/atomics '/home/shivam/postgres/include/server'/port/win32 '/home/shivam/postgres/include/server'/port/win32_msvc '/home/shivam/postgres/include/server'/port/win32_msvc/sys '/home/shivam/postgres/include/server'/port/win32/arpa '/home/shivam/postgres/include/server'/port/win32/netinet '/home/shivam/postgres/include/server'/port/win32/sys '/home/shivam/postgres/include/server'/portability
-/usr/bin/install -c -m 644 ./postgres_ext.h   '/home/shivam/postgres/include'
-/usr/bin/install -c -m 644 ./libpq/libpq-fs.h '/home/shivam/postgres/include/libpq'
-/usr/bin/install -c -m 644 pg_config.h     '/home/shivam/postgres/include'
-/usr/bin/install -c -m 644 pg_config_ext.h '/home/shivam/postgres/include'
-/usr/bin/install -c -m 644 pg_config_os.h  '/home/shivam/postgres/include'
-/usr/bin/install -c -m 644 ./pg_config_manual.h '/home/shivam/postgres/include'
-/usr/bin/install -c -m 644 ./c.h            '/home/shivam/postgres/include/internal'
-/usr/bin/install -c -m 644 ./port.h         '/home/shivam/postgres/include/internal'
-/usr/bin/install -c -m 644 ./postgres_fe.h  '/home/shivam/postgres/include/internal'
-/usr/bin/install -c -m 644 ./libpq/pqcomm.h '/home/shivam/postgres/include/internal/libpq'
-/usr/bin/install -c -m 644 pg_config.h     '/home/shivam/postgres/include/server'
-/usr/bin/install -c -m 644 pg_config_ext.h '/home/shivam/postgres/include/server'
-/usr/bin/install -c -m 644 pg_config_os.h  '/home/shivam/postgres/include/server'
-/usr/bin/install -c -m 644 utils/errcodes.h '/home/shivam/postgres/include/server/utils'
-/usr/bin/install -c -m 644 utils/fmgroids.h '/home/shivam/postgres/include/server/utils'
-/usr/bin/install -c -m 644 utils/fmgrprotos.h '/home/shivam/postgres/include/server/utils'
-cp ./*.h '/home/shivam/postgres/include/server'/
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/include/libpq' '/home/shivam/IIT/MTP/Phase2/postgres_install/include/internal/libpq'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/access '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/bootstrap '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/catalog '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/commands '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/common '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/datatype '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/executor '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/fe_utils '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/foreign '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/jit '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/lib '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/libpq '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/mb '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/nodes '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/optimizer '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/parser '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/partitioning '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/postmaster '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/regex '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/replication '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/rewrite '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/statistics '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/storage '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/tcop '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/snowball '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/snowball/libstemmer '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/tsearch '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/tsearch/dicts '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/utils '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/port '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/port/atomics '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/port/win32 '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/port/win32_msvc '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/port/win32_msvc/sys '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/port/win32/arpa '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/port/win32/netinet '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/port/win32/sys '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/portability
+/usr/bin/install -c -m 644 ./postgres_ext.h   '/home/shivam/IIT/MTP/Phase2/postgres_install/include'
+/usr/bin/install -c -m 644 ./libpq/libpq-fs.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include/libpq'
+/usr/bin/install -c -m 644 pg_config.h     '/home/shivam/IIT/MTP/Phase2/postgres_install/include'
+/usr/bin/install -c -m 644 pg_config_ext.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include'
+/usr/bin/install -c -m 644 pg_config_os.h  '/home/shivam/IIT/MTP/Phase2/postgres_install/include'
+/usr/bin/install -c -m 644 ./pg_config_manual.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include'
+/usr/bin/install -c -m 644 ./c.h            '/home/shivam/IIT/MTP/Phase2/postgres_install/include/internal'
+/usr/bin/install -c -m 644 ./port.h         '/home/shivam/IIT/MTP/Phase2/postgres_install/include/internal'
+/usr/bin/install -c -m 644 ./postgres_fe.h  '/home/shivam/IIT/MTP/Phase2/postgres_install/include/internal'
+/usr/bin/install -c -m 644 ./libpq/pqcomm.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include/internal/libpq'
+/usr/bin/install -c -m 644 pg_config.h     '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'
+/usr/bin/install -c -m 644 pg_config_ext.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'
+/usr/bin/install -c -m 644 pg_config_os.h  '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'
+/usr/bin/install -c -m 644 utils/errcodes.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server/utils'
+/usr/bin/install -c -m 644 utils/fmgroids.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server/utils'
+/usr/bin/install -c -m 644 utils/fmgrprotos.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server/utils'
+cp ./*.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/
 for dir in access bootstrap catalog commands common datatype executor fe_utils foreign jit lib libpq mb nodes optimizer parser partitioning postmaster regex replication rewrite statistics storage tcop snowball snowball/libstemmer tsearch tsearch/dicts utils port port/atomics port/win32 port/win32_msvc port/win32_msvc/sys port/win32/arpa port/win32/netinet port/win32/sys portability; do \
-  cp ./$dir/*.h '/home/shivam/postgres/include/server'/$dir/ || exit; \
+  cp ./$dir/*.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/$dir/ || exit; \
 done
-cd '/home/shivam/postgres/include/server' && chmod 644 *.h
+cd '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server' && chmod 644 *.h
 for dir in access bootstrap catalog commands common datatype executor fe_utils foreign jit lib libpq mb nodes optimizer parser partitioning postmaster regex replication rewrite statistics storage tcop snowball snowball/libstemmer tsearch tsearch/dicts utils port port/atomics port/win32 port/win32_msvc port/win32_msvc/sys port/win32/arpa port/win32/netinet port/win32/sys portability; do \
-  cd '/home/shivam/postgres/include/server'/$dir || exit; \
+  cd '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'/$dir || exit; \
   chmod 644 *.h || exit; \
 done
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/include'
@@ -805,44 +805,44 @@ make -C ../../../src/common all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/lib' '/home/shivam/postgres/lib/pkgconfig' 
-/bin/mkdir -p '/home/shivam/postgres/include' '/home/shivam/postgres/include/internal' '/home/shivam/postgres/share'
-/usr/bin/install -c -m 755  libpq.so.5.12 '/home/shivam/postgres/lib/libpq.so.5.12'
-cd '/home/shivam/postgres/lib' && \
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib' '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pkgconfig' 
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/include' '/home/shivam/IIT/MTP/Phase2/postgres_install/include/internal' '/home/shivam/IIT/MTP/Phase2/postgres_install/share'
+/usr/bin/install -c -m 755  libpq.so.5.12 '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libpq.so.5.12'
+cd '/home/shivam/IIT/MTP/Phase2/postgres_install/lib' && \
 rm -f libpq.so.5 && \
 ln -s libpq.so.5.12 libpq.so.5
-cd '/home/shivam/postgres/lib' && \
+cd '/home/shivam/IIT/MTP/Phase2/postgres_install/lib' && \
 rm -f libpq.so && \
 ln -s libpq.so.5.12 libpq.so
-/usr/bin/install -c -m 644  libpq.a '/home/shivam/postgres/lib/libpq.a'
-/usr/bin/install -c -m 644 libpq.pc '/home/shivam/postgres/lib/pkgconfig/libpq.pc'
-/usr/bin/install -c -m 644 ./libpq-fe.h '/home/shivam/postgres/include'
-/usr/bin/install -c -m 644 ./libpq-events.h '/home/shivam/postgres/include'
-/usr/bin/install -c -m 644 ./libpq-int.h '/home/shivam/postgres/include/internal'
-/usr/bin/install -c -m 644 ./pqexpbuffer.h '/home/shivam/postgres/include/internal'
-/usr/bin/install -c -m 644 ./pg_service.conf.sample '/home/shivam/postgres/share/pg_service.conf.sample'
+/usr/bin/install -c -m 644  libpq.a '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libpq.a'
+/usr/bin/install -c -m 644 libpq.pc '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pkgconfig/libpq.pc'
+/usr/bin/install -c -m 644 ./libpq-fe.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include'
+/usr/bin/install -c -m 644 ./libpq-events.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include'
+/usr/bin/install -c -m 644 ./libpq-int.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include/internal'
+/usr/bin/install -c -m 644 ./pqexpbuffer.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include/internal'
+/usr/bin/install -c -m 644 ./pg_service.conf.sample '/home/shivam/IIT/MTP/Phase2/postgres_install/share/pg_service.conf.sample'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/libpq'
 make -C ecpg install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg'
 make -C include install
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/include'
-/bin/mkdir -p '/home/shivam/postgres/include' '/home/shivam/postgres/include/informix/esql'
-/usr/bin/install -c -m 644 ./ecpgerrno.h ./ecpglib.h ./ecpgtype.h ./sqlca.h ./sql3types.h ./ecpg_informix.h ./pgtypes_error.h ./pgtypes_numeric.h ./pgtypes_timestamp.h ./pgtypes_date.h ./pgtypes_interval.h ./pgtypes.h ./sqlda.h ./sqlda-compat.h ./sqlda-native.h '/home/shivam/postgres/include/'
-/usr/bin/install -c -m 644 ./datetime.h ./decimal.h ./sqltypes.h '/home/shivam/postgres/include/informix/esql/'
-/usr/bin/install -c -m 644 ../../../../src/interfaces/ecpg/include/ecpg_config.h '/home/shivam/postgres/include'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/include' '/home/shivam/IIT/MTP/Phase2/postgres_install/include/informix/esql'
+/usr/bin/install -c -m 644 ./ecpgerrno.h ./ecpglib.h ./ecpgtype.h ./sqlca.h ./sql3types.h ./ecpg_informix.h ./pgtypes_error.h ./pgtypes_numeric.h ./pgtypes_timestamp.h ./pgtypes_date.h ./pgtypes_interval.h ./pgtypes.h ./sqlda.h ./sqlda-compat.h ./sqlda-native.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include/'
+/usr/bin/install -c -m 644 ./datetime.h ./decimal.h ./sqltypes.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include/informix/esql/'
+/usr/bin/install -c -m 644 ../../../../src/interfaces/ecpg/include/ecpg_config.h '/home/shivam/IIT/MTP/Phase2/postgres_install/include'
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/include'
 make -C pgtypeslib install
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/pgtypeslib'
-/bin/mkdir -p '/home/shivam/postgres/lib' '/home/shivam/postgres/lib/pkgconfig' 
-/usr/bin/install -c -m 755  libpgtypes.so.3.12 '/home/shivam/postgres/lib/libpgtypes.so.3.12'
-cd '/home/shivam/postgres/lib' && \
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib' '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pkgconfig' 
+/usr/bin/install -c -m 755  libpgtypes.so.3.12 '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libpgtypes.so.3.12'
+cd '/home/shivam/IIT/MTP/Phase2/postgres_install/lib' && \
 rm -f libpgtypes.so.3 && \
 ln -s libpgtypes.so.3.12 libpgtypes.so.3
-cd '/home/shivam/postgres/lib' && \
+cd '/home/shivam/IIT/MTP/Phase2/postgres_install/lib' && \
 rm -f libpgtypes.so && \
 ln -s libpgtypes.so.3.12 libpgtypes.so
-/usr/bin/install -c -m 644  libpgtypes.a '/home/shivam/postgres/lib/libpgtypes.a'
-/usr/bin/install -c -m 644 libpgtypes.pc '/home/shivam/postgres/lib/pkgconfig/libpgtypes.pc'
+/usr/bin/install -c -m 644  libpgtypes.a '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libpgtypes.a'
+/usr/bin/install -c -m 644 libpgtypes.pc '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pkgconfig/libpgtypes.pc'
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/pgtypeslib'
 make -C ecpglib install
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/ecpglib'
@@ -861,16 +861,16 @@ make -C ../../../../src/interfaces/ecpg/pgtypeslib all
 make[5]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/pgtypeslib'
 make[5]: Nothing to be done for 'all'.
 make[5]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/pgtypeslib'
-/bin/mkdir -p '/home/shivam/postgres/lib' '/home/shivam/postgres/lib/pkgconfig' 
-/usr/bin/install -c -m 755  libecpg.so.6.12 '/home/shivam/postgres/lib/libecpg.so.6.12'
-cd '/home/shivam/postgres/lib' && \
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib' '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pkgconfig' 
+/usr/bin/install -c -m 755  libecpg.so.6.12 '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libecpg.so.6.12'
+cd '/home/shivam/IIT/MTP/Phase2/postgres_install/lib' && \
 rm -f libecpg.so.6 && \
 ln -s libecpg.so.6.12 libecpg.so.6
-cd '/home/shivam/postgres/lib' && \
+cd '/home/shivam/IIT/MTP/Phase2/postgres_install/lib' && \
 rm -f libecpg.so && \
 ln -s libecpg.so.6.12 libecpg.so
-/usr/bin/install -c -m 644  libecpg.a '/home/shivam/postgres/lib/libecpg.a'
-/usr/bin/install -c -m 644 libecpg.pc '/home/shivam/postgres/lib/pkgconfig/libecpg.pc'
+/usr/bin/install -c -m 644  libecpg.a '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libecpg.a'
+/usr/bin/install -c -m 644 libecpg.pc '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pkgconfig/libecpg.pc'
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/ecpglib'
 make -C compatlib install
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/compatlib'
@@ -896,16 +896,16 @@ make -C ../../../../src/interfaces/ecpg/pgtypeslib all
 make[5]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/pgtypeslib'
 make[5]: Nothing to be done for 'all'.
 make[5]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/pgtypeslib'
-/bin/mkdir -p '/home/shivam/postgres/lib' '/home/shivam/postgres/lib/pkgconfig' 
-/usr/bin/install -c -m 755  libecpg_compat.so.3.12 '/home/shivam/postgres/lib/libecpg_compat.so.3.12'
-cd '/home/shivam/postgres/lib' && \
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib' '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pkgconfig' 
+/usr/bin/install -c -m 755  libecpg_compat.so.3.12 '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libecpg_compat.so.3.12'
+cd '/home/shivam/IIT/MTP/Phase2/postgres_install/lib' && \
 rm -f libecpg_compat.so.3 && \
 ln -s libecpg_compat.so.3.12 libecpg_compat.so.3
-cd '/home/shivam/postgres/lib' && \
+cd '/home/shivam/IIT/MTP/Phase2/postgres_install/lib' && \
 rm -f libecpg_compat.so && \
 ln -s libecpg_compat.so.3.12 libecpg_compat.so
-/usr/bin/install -c -m 644  libecpg_compat.a '/home/shivam/postgres/lib/libecpg_compat.a'
-/usr/bin/install -c -m 644 libecpg_compat.pc '/home/shivam/postgres/lib/pkgconfig/libecpg_compat.pc'
+/usr/bin/install -c -m 644  libecpg_compat.a '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libecpg_compat.a'
+/usr/bin/install -c -m 644 libecpg_compat.pc '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pkgconfig/libecpg_compat.pc'
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/compatlib'
 make -C preproc install
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/preproc'
@@ -917,8 +917,8 @@ make -C ../../../../src/common all
 make[5]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[5]: Nothing to be done for 'all'.
 make[5]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  ecpg '/home/shivam/postgres/bin'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  ecpg '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg/preproc'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/ecpg'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces'
@@ -935,18 +935,18 @@ make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/com
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/interfaces/libpq'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  libpqwalreceiver.so '/home/shivam/postgres/lib/libpqwalreceiver.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  libpqwalreceiver.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libpqwalreceiver.so'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/replication/libpqwalreceiver'
 make -C backend/replication/pgoutput install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/replication/pgoutput'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  pgoutput.so '/home/shivam/postgres/lib/pgoutput.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  pgoutput.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgoutput.so'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/backend/replication/pgoutput'
 make -C fe_utils install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 644  libpgfeutils.a '/home/shivam/postgres/lib/libpgfeutils.a'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 644  libpgfeutils.a '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/libpgfeutils.a'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
 make -C bin install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin'
@@ -983,8 +983,8 @@ make -C ../../../src/fe_utils all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  initdb '/home/shivam/postgres/bin/initdb'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  initdb '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/initdb'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/initdb'
 make -C pg_archivecleanup install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_archivecleanup'
@@ -996,8 +996,8 @@ make -C ../../../src/common all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pg_archivecleanup '/home/shivam/postgres/bin/pg_archivecleanup'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pg_archivecleanup '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_archivecleanup'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_archivecleanup'
 make -C pg_basebackup install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_basebackup'
@@ -1032,10 +1032,10 @@ make -C ../../../src/fe_utils all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pg_basebackup '/home/shivam/postgres/bin/pg_basebackup'
-/usr/bin/install -c  pg_receivewal '/home/shivam/postgres/bin/pg_receivewal'
-/usr/bin/install -c  pg_recvlogical '/home/shivam/postgres/bin/pg_recvlogical'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pg_basebackup '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_basebackup'
+/usr/bin/install -c  pg_receivewal '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_receivewal'
+/usr/bin/install -c  pg_recvlogical '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_recvlogical'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_basebackup'
 make -C pg_checksums install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_checksums'
@@ -1047,8 +1047,8 @@ make -C ../../../src/common all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pg_checksums '/home/shivam/postgres/bin/pg_checksums'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pg_checksums '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_checksums'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_checksums'
 make -C pg_config install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_config'
@@ -1060,8 +1060,8 @@ make -C ../../../src/common all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c -m 755 pg_config '/home/shivam/postgres/bin/pg_config'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c -m 755 pg_config '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_config'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_config'
 make -C pg_controldata install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_controldata'
@@ -1073,8 +1073,8 @@ make -C ../../../src/common all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pg_controldata '/home/shivam/postgres/bin/pg_controldata'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pg_controldata '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_controldata'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_controldata'
 make -C pg_ctl install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_ctl'
@@ -1086,8 +1086,8 @@ make -C ../../../src/common all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pg_ctl '/home/shivam/postgres/bin/pg_ctl'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pg_ctl '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_ctl'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_ctl'
 make -C pg_dump install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_dump'
@@ -1122,10 +1122,10 @@ make -C ../../../src/fe_utils all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pg_dump '/home/shivam/postgres/bin'/pg_dump
-/usr/bin/install -c  pg_restore '/home/shivam/postgres/bin'/pg_restore
-/usr/bin/install -c  pg_dumpall '/home/shivam/postgres/bin'/pg_dumpall
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pg_dump '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'/pg_dump
+/usr/bin/install -c  pg_restore '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'/pg_restore
+/usr/bin/install -c  pg_dumpall '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'/pg_dumpall
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_dump'
 make -C pg_resetwal install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_resetwal'
@@ -1137,8 +1137,8 @@ make -C ../../../src/common all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pg_resetwal '/home/shivam/postgres/bin/pg_resetwal'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pg_resetwal '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_resetwal'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_resetwal'
 make -C pg_rewind install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_rewind'
@@ -1161,8 +1161,8 @@ make -C ../../../src/common all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pg_rewind '/home/shivam/postgres/bin/pg_rewind'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pg_rewind '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_rewind'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_rewind'
 make -C pg_test_fsync install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_test_fsync'
@@ -1174,8 +1174,8 @@ make -C ../../../src/common all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pg_test_fsync '/home/shivam/postgres/bin/pg_test_fsync'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pg_test_fsync '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_test_fsync'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_test_fsync'
 make -C pg_test_timing install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_test_timing'
@@ -1187,8 +1187,8 @@ make -C ../../../src/common all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pg_test_timing '/home/shivam/postgres/bin/pg_test_timing'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pg_test_timing '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_test_timing'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_test_timing'
 make -C pg_upgrade install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_upgrade'
@@ -1223,8 +1223,8 @@ make -C ../../../src/fe_utils all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pg_upgrade '/home/shivam/postgres/bin/pg_upgrade'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pg_upgrade '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_upgrade'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_upgrade'
 make -C pg_waldump install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_waldump'
@@ -1236,8 +1236,8 @@ make -C ../../../src/common all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/common'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pg_waldump '/home/shivam/postgres/bin/pg_waldump'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pg_waldump '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pg_waldump'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pg_waldump'
 make -C pgbench install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pgbench'
@@ -1272,8 +1272,8 @@ make -C ../../../src/fe_utils all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  pgbench '/home/shivam/postgres/bin/pgbench'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  pgbench '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/pgbench'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/pgbench'
 make -C psql install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/psql'
@@ -1308,9 +1308,9 @@ make -C ../../../src/fe_utils all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
-/bin/mkdir -p '/home/shivam/postgres/bin' '/home/shivam/postgres/share'
-/usr/bin/install -c  psql '/home/shivam/postgres/bin/psql'
-/usr/bin/install -c -m 644 ./psqlrc.sample '/home/shivam/postgres/share/psqlrc.sample'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin' '/home/shivam/IIT/MTP/Phase2/postgres_install/share'
+/usr/bin/install -c  psql '/home/shivam/IIT/MTP/Phase2/postgres_install/bin/psql'
+/usr/bin/install -c -m 644 ./psqlrc.sample '/home/shivam/IIT/MTP/Phase2/postgres_install/share/psqlrc.sample'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/psql'
 make -C scripts install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/scripts'
@@ -1345,15 +1345,15 @@ make -C ../../../src/fe_utils all
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
 make[4]: Nothing to be done for 'all'.
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/fe_utils'
-/bin/mkdir -p '/home/shivam/postgres/bin'
-/usr/bin/install -c  createdb   '/home/shivam/postgres/bin'/createdb
-/usr/bin/install -c  dropdb     '/home/shivam/postgres/bin'/dropdb
-/usr/bin/install -c  createuser '/home/shivam/postgres/bin'/createuser
-/usr/bin/install -c  dropuser   '/home/shivam/postgres/bin'/dropuser
-/usr/bin/install -c  clusterdb  '/home/shivam/postgres/bin'/clusterdb
-/usr/bin/install -c  vacuumdb   '/home/shivam/postgres/bin'/vacuumdb
-/usr/bin/install -c  reindexdb  '/home/shivam/postgres/bin'/reindexdb
-/usr/bin/install -c  pg_isready '/home/shivam/postgres/bin'/pg_isready
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'
+/usr/bin/install -c  createdb   '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'/createdb
+/usr/bin/install -c  dropdb     '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'/dropdb
+/usr/bin/install -c  createuser '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'/createuser
+/usr/bin/install -c  dropuser   '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'/dropuser
+/usr/bin/install -c  clusterdb  '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'/clusterdb
+/usr/bin/install -c  vacuumdb   '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'/vacuumdb
+/usr/bin/install -c  reindexdb  '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'/reindexdb
+/usr/bin/install -c  pg_isready '/home/shivam/IIT/MTP/Phase2/postgres_install/bin'/pg_isready
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin/scripts'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/bin'
 make -C pl install
@@ -1362,19 +1362,19 @@ make -C plpgsql install
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/pl/plpgsql'
 make -C src install
 make[4]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/pl/plpgsql/src'
-/bin/mkdir -p '/home/shivam/postgres/lib'
-/usr/bin/install -c -m 755  plpgsql.so '/home/shivam/postgres/lib/plpgsql.so'
-/bin/mkdir -p '/home/shivam/postgres/share/extension'
-/bin/mkdir -p '/home/shivam/postgres/include/server'
-/usr/bin/install -c -m 644 ./plpgsql.control ./plpgsql--1.0.sql ./plpgsql--unpackaged--1.0.sql '/home/shivam/postgres/share/extension/'
-/usr/bin/install -c -m 644 './plpgsql.h' '/home/shivam/postgres/include/server'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib'
+/usr/bin/install -c -m 755  plpgsql.so '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/plpgsql.so'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/share/extension'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'
+/usr/bin/install -c -m 644 ./plpgsql.control ./plpgsql--1.0.sql ./plpgsql--unpackaged--1.0.sql '/home/shivam/IIT/MTP/Phase2/postgres_install/share/extension/'
+/usr/bin/install -c -m 644 './plpgsql.h' '/home/shivam/IIT/MTP/Phase2/postgres_install/include/server'
 make[4]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/pl/plpgsql/src'
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/pl/plpgsql'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/pl'
 make -C makefiles install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/makefiles'
-/bin/mkdir -p '/home/shivam/postgres/lib/pgxs/src/makefiles'
-/usr/bin/install -c -m 644 ./pgxs.mk '/home/shivam/postgres/lib/pgxs/src/makefiles/'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgxs/src/makefiles'
+/usr/bin/install -c -m 644 ./pgxs.mk '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgxs/src/makefiles/'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/makefiles'
 make -C test/regress install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/test/regress'
@@ -1390,8 +1390,8 @@ make -C ../../../contrib/spi
 make[3]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/contrib/spi'
 make[3]: Nothing to be done for 'all'.
 make[3]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/contrib/spi'
-/bin/mkdir -p '/home/shivam/postgres/lib/pgxs/src/test/regress'
-/usr/bin/install -c  pg_regress '/home/shivam/postgres/lib/pgxs/src/test/regress/pg_regress'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgxs/src/test/regress'
+/usr/bin/install -c  pg_regress '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgxs/src/test/regress/pg_regress'
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/test/regress'
 make -C test/isolation install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/test/isolation'
@@ -1419,16 +1419,16 @@ make -C test/perl install
 make[2]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/test/perl'
 make[2]: Nothing to be done for 'install'.
 make[2]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src/test/perl'
-/bin/mkdir -p '/home/shivam/postgres/lib/pgxs/src'
-/usr/bin/install -c -m 644 Makefile.global '/home/shivam/postgres/lib/pgxs/src/Makefile.global'
-/usr/bin/install -c -m 644 Makefile.port '/home/shivam/postgres/lib/pgxs/src/Makefile.port'
-/usr/bin/install -c -m 644 ./Makefile.shlib '/home/shivam/postgres/lib/pgxs/src/Makefile.shlib'
-/usr/bin/install -c -m 644 ./nls-global.mk '/home/shivam/postgres/lib/pgxs/src/nls-global.mk'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgxs/src'
+/usr/bin/install -c -m 644 Makefile.global '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgxs/src/Makefile.global'
+/usr/bin/install -c -m 644 Makefile.port '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgxs/src/Makefile.port'
+/usr/bin/install -c -m 644 ./Makefile.shlib '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgxs/src/Makefile.shlib'
+/usr/bin/install -c -m 644 ./nls-global.mk '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgxs/src/nls-global.mk'
 make[1]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/src'
 make -C config install
 make[1]: Entering directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/config'
-/bin/mkdir -p '/home/shivam/postgres/lib/pgxs/config'
-/usr/bin/install -c -m 755 ./install-sh '/home/shivam/postgres/lib/pgxs/config/install-sh'
-/usr/bin/install -c -m 755 ./missing '/home/shivam/postgres/lib/pgxs/config/missing'
+/bin/mkdir -p '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgxs/config'
+/usr/bin/install -c -m 755 ./install-sh '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgxs/config/install-sh'
+/usr/bin/install -c -m 755 ./missing '/home/shivam/IIT/MTP/Phase2/postgres_install/lib/pgxs/config/missing'
 make[1]: Leaving directory '/home/shivam/IIT/MTP/Phase2/postgresql-12.2/config'
 PostgreSQL installation complete.
