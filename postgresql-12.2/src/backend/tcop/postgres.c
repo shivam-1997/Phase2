@@ -3693,6 +3693,42 @@ process_postgres_switches(int argc, char *argv[], GucContext ctx,
 
 
 /* ----------------------------------------------------------------
+ * functions added by shivam start here
+ * ----------------------------------------------------------------
+ */
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+#define QUERY_SIZE 500
+
+bool isHyper(char *query){
+	if(strcasestr(query, "hyperedge"))	return true;
+	else return false;
+}
+void query_rewrite(char *query){
+	if(!isHyper(query)){
+		// HYPEREDGE keyword not present
+		exec_simple_query(query);
+		return;
+	}
+	else{
+		/*
+			first find the main commnad in the query
+			and then send appropriate XML message to HyperGraph server
+		*/
+		printf("HYPEREDGE keyword found");
+	}
+}
+
+/* ----------------------------------------------------------------
+ * Shivam's functions end here
+ * ----------------------------------------------------------------
+ */
+
+/* ----------------------------------------------------------------
  * PostgresMain
  *	   postgres main loop -- all backends, interactive or otherwise start here
  *
@@ -3844,12 +3880,12 @@ PostgresMain(int argc, char *argv[],
 	 * this before we can use LWLocks (and in the EXEC_BACKEND case we already
 	 * had to do some stuff with LWLocks).
 	 */
-#ifdef EXEC_BACKEND
+	#ifdef EXEC_BACKEND
 	if (!IsUnderPostmaster)
-		InitProcess();
-#else
+		InitProcess();	
+	#else
 	InitProcess();
-#endif
+	#endif
 
 	/* We need to allow SIGINT, etc during the initial transaction */
 	PG_SETMASK(&UnBlockSig);
@@ -4244,7 +4280,10 @@ PostgresMain(int argc, char *argv[],
 							exec_simple_query(query_string);
 					}
 					else
-						exec_simple_query(query_string);
+					// following line commented by shivam
+						// exec_simple_query(query_string);
+					// following line added by shivam
+					query_rewrite(query_string);
 
 					send_ready_for_query = true;
 				}
