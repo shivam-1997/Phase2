@@ -4,3 +4,9 @@
 2020-02-18 13:19:49.322 IST [32577] LOG:  listening on Unix socket "/tmp/.s.PGSQL.9432"
 2020-02-18 13:19:49.415 IST [32578] LOG:  database system was shut down at 2020-02-18 13:19:37 IST
 2020-02-18 13:19:49.441 IST [32577] LOG:  database system is ready to accept connections
+2020-02-18 15:32:38.895 IST [32585] LOG:  could not receive data from client: Connection timed out
+2020-02-18 15:42:49.720 IST [32577] LOG:  received fast shutdown request
+2020-02-18 15:42:49.802 IST [32577] LOG:  aborting any active transactions
+2020-02-18 15:42:49.802 IST [32577] LOG:  background worker "logical replication launcher" (PID 32584) exited with exit code 1
+2020-02-18 15:42:49.803 IST [32579] LOG:  shutting down
+2020-02-18 15:42:49.942 IST [32577] LOG:  database system is shut down

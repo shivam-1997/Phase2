@@ -220,7 +220,7 @@ InteractiveBackend(StringInfo inBuf)
 	/*
 	 * display a prompt and obtain input from the user
 	 */
-	printf("backend> ");
+	printf("shivam_backend> ");
 	fflush(stdout);
 
 	resetStringInfo(inBuf);
@@ -3705,22 +3705,24 @@ process_postgres_switches(int argc, char *argv[], GucContext ctx,
 #define QUERY_SIZE 500
 
 bool isHyper(char *query){
+	
 	if(strcasestr(query, "hyperedge"))	return true;
 	else return false;
 }
+
 void query_rewrite(char *query){
 	if(!isHyper(query)){
 		// HYPEREDGE keyword not present
 		exec_simple_query(query);
 		return;
 	}
-	else{
-		/*
-			first find the main commnad in the query
-			and then send appropriate XML message to HyperGraph server
-		*/
-		printf("HYPEREDGE keyword found");
-	}
+	/*
+		first find the main commnad in the query
+		and then send appropriate XML message to HyperGraph server
+	*/
+	printf("HYPEREDGE keyword found\n");
+	// the first word would be the main command
+
 }
 
 /* ----------------------------------------------------------------
