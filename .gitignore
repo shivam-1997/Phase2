@@ -3,3 +3,4 @@
 .vscode/*
 postgres_install/*
 
+/.metadata/
