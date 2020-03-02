@@ -3703,26 +3703,84 @@ process_postgres_switches(int argc, char *argv[], GucContext ctx,
 #include <stdbool.h>
 
 #define QUERY_SIZE 500
+#define HG_PORT 8432	//	the port for Hypergraph server
+#define s_string(x) char x[QUERY_SIZE]
 
 bool isHyper(char *query){
 	
-	if(strcasestr(query, "hyperedge"))	return true;
+	if(strcasestr(query, "hyper"))	return true;
 	else return false;
 }
 
+char* findCommand(char *query){
+	char *command= (char *)malloc(sizeof(char)* QUERY_SIZE);
+	int i=0;
+	for(; query[i]!=0 && query[i]!=' '; i++){
+		command[i] = query[i];
+	}
+	command[i]=0;
+	return command;
+}
+char* createXML(char *command, char args, ...){
+	char *xml = (char*)malloc(sizeof(char)*QUERY_SIZE);
+	// do something-something
+	return xml;
+}
 void query_rewrite(char *query){
+
 	if(!isHyper(query)){
 		// HYPEREDGE keyword not present
 		exec_simple_query(query);
 		return;
 	}
+	
+	// creating socket to access the hypergraph server
+	int sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	
+	struct sockaddr_in serv_addr;
+	serv_addr.sin_family = AF_INET;
+	serv_addr.sin_port = htons(HG_PORT);
+	
+	int opt=1;
+	if(setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))==0){
+		perror("setsockopt error");
+		return;
+	}
+	if(connect(sockfd, (struct sockaddr *)&serv_addr, sizeof(serv_addr))<0){
+		perror("connection error");
+		return;
+	}
+	
 	/*
 		first find the main commnad in the query
 		and then send appropriate XML message to HyperGraph server
 	*/
 	printf("HYPEREDGE keyword found\n");
 	// the first word would be the main command
+	char *command = findCommand(query);
 
+	char *xml = createXML(command, command);
+	send(sockfd, xml, strlen(xml), 0);
+
+	if(strcasecmp(command, "create")==0){
+		printf("create command\n");
+	}
+	else
+	if(strcasecmp(command, "alter")==0){
+		printf("alter command\n");
+	}
+	else
+	if(strcasecmp(command, "delete")==0){
+		printf("delete command\n");
+	}
+
+
+	char *response = (char *)malloc(sizeof(char)*QUERY_SIZE);
+	read(sockfd, response, QUERY_SIZE);
+	// deleting all the dynamically allocated variables
+	free(command);
+	free(xml);
+	free(response);
 }
 
 /* ----------------------------------------------------------------

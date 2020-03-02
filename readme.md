@@ -12,6 +12,7 @@ in postgresql.conf
 Add HyperEdge as a reserve keyword in postgresql-12.2/src/include/parser/kwlist.h <br>
 Correspondingly add structuires for create/alter statements in gram.y and parsenodes.h
 ~~
+
 types of statements to be handled:
 
 CREATE HYPEREDGE( id, source_entity, destination_entity, condition);

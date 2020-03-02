@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.hypergraphdb</groupId>
+    <artifactId>hypergraphdb</artifactId>
+    <version>1.4-SNAPSHOT</version>  
+  </parent>  
+  <properties>
+    <packageit>jar</packageit>
+    <bundle.symbolicName>${project.groupId}-${project.artifactId};singleton:=true</bundle.symbolicName>
+    <bundle.namespace>org.hypergraph</bundle.namespace>    
+    <hgdb.version>1.4-SNAPSHOT</hgdb.version>
+  </properties>    
+  <packaging>bundle</packaging>  
+  <artifactId>hgdb</artifactId>
+  <name>HyperGraphDB Core</name>
+  <build>
+   <plugins>
+     <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestFile>META-INF/MANIFEST.MF</manifestFile>
+          </archive>
+        </configuration>
+     </plugin>
+    <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>1.4.0</version>
+        <extensions>true</extensions>
+        <configuration>
+ 		  <manifestLocation>META-INF</manifestLocation>        
+          <instructions>
+            <Bundle-SymbolicName>${groupId}-${artifactId};singleton:=true</Bundle-SymbolicName>
+            <Bundle-Name>${project.name}</Bundle-Name>
+            <Bundle-Version>${project.version}</Bundle-Version>
+            <!-- This requirement is really to please OSGI but it's in fact only a runtime
+            dependency, not build time, and it was put there for the ProtegeOWL plugin so we 
+            should figure out how to get rid of it!  -->
+            <Require-Bundle>${groupId}-hgbdbje</Require-Bundle>
+            <Export-Package>org.hypergraphdb,org.hypergraphdb.algorithms,org.hypergraphdb.query,
+            org.hypergraphdb.util,org.hypergraphdb.type,org.hypergraphdb.annotation,
+            org.hypergraphdb.atom,org.hypergraphdb.cache,org.hypergraphdb.event,
+            org.hypergraphdb.handle,org.hypergraphdb.maintenance,org.hypergraphdb.storage,
+            org.hypergraphdb.transaction,org.hypergraphdb.type.javaprimitive,
+            org.hypergraphdb.indexing,org.hypergraphdb.query.cond2qry,org.hypergraphdb.query.impl,
+            org.hypergraphdb.atom.impl</Export-Package>
+            <!--
+            javax.* packages must be explicitly imported as per OSGI. OSGI containers normally
+            implicitly import them as "extras", see:
+            http://wiki.osgi.org/wiki/Why_does_Eclipse_find_javax.swing_but_not_Felix%3F  
+             -->
+            <Import-Package>javax.management.*;resolution:=optional</Import-Package>
+          </instructions>
+        </configuration>
+    </plugin>     
+    </plugins>
+  </build>  
+</project>

@@ -1,0 +1,9 @@
+gov.miamidade.owlgdb/
+**/*.iml
+.idea
+**/target
+core/META-INF/
+**/.project
+**/.classpath
+**/.settings
+**/.gitignore

@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-SymbolicName: org.hypergraphdb-hgbdbnative;singleton:=true
+Built-By: borislav
+Bundle-ManifestVersion: 2
+Bnd-LastModified: 1454885619917
+Embed-Dependency: db
+Tool: Bnd-0.0.238
+Bundle-Version: 1.4.0.SNAPSHOT
+Bundle-Name: HyperGraphDB BDB-JE Storage
+Bundle-ClassPath: .,db-5.3.15.jar
+Private-Package: com.sleepycat.asm,com.sleepycat.bind,com.sleepycat.bi
+ nd.serial,com.sleepycat.bind.tuple,com.sleepycat.collections,com.slee
+ pycat.compat,com.sleepycat.db,com.sleepycat.db.internal,com.sleepycat
+ .persist,com.sleepycat.persist.evolve,com.sleepycat.persist.impl,com.
+ sleepycat.persist.model,com.sleepycat.persist.raw,com.sleepycat.util,
+ com.sleepycat.util.keyrange
+Created-By: Apache Maven Bundle Plugin
+Build-Jdk: 1.8.0_40
+
