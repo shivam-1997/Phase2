@@ -1,4 +1,5 @@
-package benchmark;
+package hgdb;
+
 import java.io.*;
 import java.util.*;
 import org.hypergraphdb.*;
@@ -8,9 +9,7 @@ import org.hypergraphdb.handle.SequentialUUIDHandleFactory;
 import org.hypergraphdb.indexing.ByPartIndexer;
 import org.hypergraphdb.storage.bje.BJEConfig;
 import org.hypergraphdb.util.Pair;
-import benchmark.Entities.Professor;
-import benchmark.Entities.Project;
-import benchmark.Entities.Student;
+import hgdb.Entities.*;
 
 public class CreateInRun {
 		
@@ -26,22 +25,29 @@ public class CreateInRun {
 
 		    // creating a list of Student objects
 			
-		    List<Student> students = new ArrayList<Student>();
+		    List<Node> students = new ArrayList<Node>();
 		    Iterator<String> itr = lines.iterator();
 		    while (itr.hasNext()) {
 		    	String nextLine = itr.next();
-		    	String[] arrOfStr = nextLine.split("\t", 2); 
-		    	students.add(new Student(arrOfStr[0], arrOfStr[0], arrOfStr[1].charAt(0)));
+		    	String[] arrOfStr = nextLine.split("\t", 2);
+		    	HashMap<String, String> data = new HashMap<String, String>();
+		    	data.put("type", "student");
+		    	data.put("roll", arrOfStr[0]);
+		    	data.put("name", arrOfStr[0]);
+		    	data.put("gender", arrOfStr[1]);
+		    	Node student = new Node();
+		    	student.setData(data);
+		    	students.add(student);
 		    }
 		    
 		    // importing the objects in database
-		    Iterator<Student> students_itr = students.iterator();
+		    Iterator<Node> students_itr = students.iterator();
 		    int i=0;
 		    long start_time = System.nanoTime();
 		    while (students_itr.hasNext()) {
 		    	if(i%1000 == 0)	System.out.print(i+"...");
-	    		Student obj = students_itr.next();
-	    		studentHandles.put(obj.getName(), graph.add(obj));
+	    		Node obj = students_itr.next();
+	    		studentHandles.put(obj.getData().get("name"), graph.add(obj));
 		    	i+=1;
 		    }
 		    long end_time = System.nanoTime();
@@ -59,21 +65,32 @@ public class CreateInRun {
 
 		    // creating a list of Student objects
 			
-		    List<Professor> profs = new ArrayList<Professor>();
+		    List<Node> profs = new ArrayList<Node>();
 		    Iterator<String> itr = lines.iterator();
 		    while (itr.hasNext()) {
 		    	String nextLine = itr.next();
-		    	profs.add(new Professor(nextLine, nextLine, 'm'));
+		    	String[] arrOfStr = nextLine.split("\t", 2);
+		    	
+		    	HashMap<String, String> data = new HashMap<String, String>();
+		    	data.put("type", "professor");
+		    	data.put("roll", arrOfStr[0]);
+		    	data.put("name", arrOfStr[0]);
+		    	data.put("gender", arrOfStr[1]);
+		    	
+		    	Node prof = new Node();
+		    	prof.setData(data);
+		    	
+		    	profs.add(prof);
 		    }
 		    
 		    // importing the objects in database
-		    Iterator<Professor> profs_itr = profs.iterator();
+		    Iterator<Node> profs_itr = profs.iterator();
 		    int i=0;
 		    long start_time = System.nanoTime();
 		    while (profs_itr.hasNext()) {
 		    	if(i%1000 == 0)	System.out.print(i+"...");
-	    		Professor obj = profs_itr.next();
-	    		profHandles.put(obj.getName(), graph.add(obj));
+	    		Node obj = profs_itr.next();
+	    		profHandles.put(obj.getData().get("name"), graph.add(obj));
 		    	i+=1;
 		    }
 		    long end_time = System.nanoTime();
@@ -90,57 +107,35 @@ public class CreateInRun {
 
 		    // creating a list of Project objects
 			
-		    List<Project> projs = new ArrayList<Project>();
+		    List<Node> projs = new ArrayList<Node>();
 		    Iterator<String> itr = lines.iterator();
 		    while (itr.hasNext()) {
 		    	String nextLine = itr.next();
-		    	projs.add(new Project(nextLine));
+		    	HashMap<String, String> data = new HashMap<String, String>();
+		    	data.put("type", "project");
+		    	data.put("name", nextLine);
+		    	
+		    	Node proj = new Node();
+		    	proj.setData(data);
+		    	
+		    	projs.add(proj);
 		    }
 		    
 		    // importing the objects in database
-		    Iterator<Project> projs_itr = projs.iterator();
+		    Iterator<Node> projs_itr = projs.iterator();
 		    int i=0;
 		    long start_time = System.nanoTime();
 		    while (projs_itr.hasNext()) {
 		    	if(i%1000 == 0)	System.out.print(i+"...");
-	    		Project obj = projs_itr.next();
-	    		projHandles.put(obj.getName(), graph.add(obj));
+	    		Node obj = projs_itr.next();
+	    		
+	    		projHandles.put(obj.getData().get("name"), graph.add(obj));
 		    	i+=1;
 		    }
 		    long end_time = System.nanoTime();
 		    long time_taken = (long) ((end_time- start_time)/1000000.0);
 			System.out.println(i+" projects imported");
 			System.out.println("import of nodes took "+ time_taken + "ms.");
-		}
-		
-		public static void addRelations(String fileName, HyperGraph graph)
-		{
-			// loading the file in the form of list of strings
-			List<String> lines = Utils.getAllLines(fileName);
-			
-			// importing the relations
-			Iterator<String> itr = lines.iterator();
-			int i=0;
-			HGHandle handle1, handle2;
-			long start_time = System.nanoTime();
-		    while(itr.hasNext()) {
-				String line = itr.next();
-				String[] arrOfStr = line.split("\t", 2); 
-				handle1 = studentHandles.get("st_"+arrOfStr[0]);
-				handle2 = studentHandles.get("st_"+arrOfStr[1]);
-				graph.add(new HGValueLink("called", handle1, handle2));
-				i++;
-			}
-			long end_time = System.nanoTime();
-		    long time_taken = (end_time- start_time)/1000000000;
-		    
-//			
-////			HGHandle duplicateLink = graph.add(new HGPlainLink(handle1, handle2));
-//	        List<HGHandle> dupsList = hg.findAll(graph, hg.link(handle1, handle2));
-//	        System.out.println("querying for link returned that duplicate Link? :" + dupsList.contains(duplicateLink));
-			System.out.println(i+" Relations imported");
-			System.out.println("import of relations took "+ time_taken + "s.");
-		    
 		}
 	 	
 		public static void addRelations(HyperGraph graph)
@@ -188,6 +183,7 @@ public class CreateInRun {
 		    
 		}
 	 			
+
 		public static void aQuery(HyperGraph graph) {
 
 			System.out.println("\nDepth first traversing started");
@@ -220,15 +216,8 @@ public class CreateInRun {
 			System.out.println("Done");
 		}
 		
-		public static void main(String[] args) {
-			
-			String databaseLocation = "databases/University/";
-			File folder = new File(databaseLocation);
-			if(folder.exists())		Utils.deleteFolder(folder);
-			HGConfiguration config = Utils.setConfig();
-			HyperGraph graph = HGEnvironment.get(databaseLocation, config);
-//		    HyperGraph graph = HGEnvironment.get(databaseLocation); 
-		    
+		public static void createGraph(HyperGraph graph) {
+
 //			Importing data-set
 			addStudents("dataset/students.txt", graph);
 			addProfs("dataset/profs.txt", graph);
@@ -242,9 +231,21 @@ public class CreateInRun {
 //		    	System.out.println( st.getName() + " " + s);
 //		    }
 		    
-			
 			addRelations(graph);
 			System.out.println("Graph created");
+		}
+		
+		public static void main(String[] args) {
+			
+			String databaseLocation = "databases/University/";
+			File folder = new File(databaseLocation);
+			if(folder.exists())		Utils.deleteFolder(folder);
+			HGConfiguration config = Utils.setConfig();
+			
+			HyperGraph graph = HGEnvironment.get(databaseLocation, config);
+//		    HyperGraph graph = HGEnvironment.get(databaseLocation); 
+			createGraph(graph);
+			
 //		    findStudentsUnderProf(graph);
 		    
 			Scanner sc = new Scanner(System.in);
@@ -260,7 +261,14 @@ public class CreateInRun {
 //					CREATE HYPEREDGE(
 					for(; command.charAt(i)!='('; i++);
 //					id, 
-					for(; command.charAt)
+					String id_string="";
+					for(; command.charAt(i)!=','; i++) {
+						id_string += command.charAt(i);
+					}
+					long id = Long.parseLong( id_string.trim() );
+					
+					createHyperEdge(id);
+					
 				}
 			}while(!command.equalsIgnoreCase("exit"));
 			

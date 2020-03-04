@@ -24,11 +24,13 @@ def generateStudents(n):
 def generateProfs(n):
     profs = list()
     with open("profs.txt", "w") as f:
+        genderList = ['m', 'f']
         for i in range(n):
             roll = "prof_" + str(i)
-            print(roll, file=f)
+            #gender = random.choice(genderList)
+            gender = round(random.uniform(5.0,10.0), 2)
+            print(roll, gender, sep='\t', file=f)
             profs.append(roll)
-
 
     return profs
 

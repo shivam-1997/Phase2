@@ -1,7 +1,6 @@
 package hgdb;
 
 import java.sql.*;
-import hgdb.Node;
 import java.net.*; 
 import java.io.*;
 
@@ -11,6 +10,9 @@ import org.hypergraphdb.HyperGraph;
 import org.hypergraphdb.handle.SequentialUUIDHandleFactory;
 import org.hypergraphdb.storage.bje.BJEConfig;
 import org.w3c.dom.*;
+
+import hgdb.Entities.Node;
+
 import javax.xml.parsers.*;
 
 public class Server {
