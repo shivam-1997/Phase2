@@ -3701,11 +3701,35 @@ process_postgres_switches(int argc, char *argv[], GucContext ctx,
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <sys/socket.h> //For Sockets
+#include <netinet/in.h> //For the AF_INET (Address Family)
 
 #define QUERY_SIZE 500
-#define HG_PORT 8432	//	the port for Hypergraph server
+#define MSG_SIZE 500
+#define HG_PORT 8433	//	the port for Hypergraph server
 #define s_string(x) char x[QUERY_SIZE]
 
+struct sockaddr_in serv; //This is our main socket variable.
+int fd; //This is the socket file descriptor that will be used to identify the socket
+int conn; //This is the connection file descriptor that will be used to distinguish client connections.
+char message[MSG_SIZE] = ""; //This array will store the messages that are sent by the server
+connectToHGDB(){
+	fd = socket(AF_INET, SOCK_STREAM, 0);
+	serv.sin_family = AF_INET;
+	serv.sin_port = htons(HG_PORT);
+	inet_pton(AF_INET, "127.0.0.1", &serv.sin_addr); //This binds the client to localhost
+	connect(fd, (struct sockaddr *)&serv, sizeof(serv)); //This connects the client to the server.
+	while(1) {
+    	printf("Enter a message: ");
+    	memset(message, 0, MSG_SIZE);
+		fgets(message, MSG_SIZE, stdin);
+    	send(fd, message, strlen(message), 0);
+		// recv(conn, message, 100, 0);
+		memset(message, 0, MSG_SIZE);
+		recvfrom(fd, message, MSG_SIZE, 0, NULL, NULL);
+		printf("Message Received: %s\n", message);
+    }
+}
 bool isHyper(char *query){
 	
 	if(strcasestr(query, "hyper"))	return true;
@@ -4179,6 +4203,13 @@ PostgresMain(int argc, char *argv[],
 	if (!ignore_till_sync)
 		send_ready_for_query = true;	/* initially, or after error */
 
+	/*
+		added by shivam
+	*/
+	connectToHGDB();
+	/*
+		end
+	*/
 	/*
 	 * Non-error queries loop here.
 	 */

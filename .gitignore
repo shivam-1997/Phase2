@@ -2,5 +2,5 @@
 *.zip
 .vscode/*
 postgres_install/*
-
+**/logfile
 /.metadata/
