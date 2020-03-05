@@ -14,9 +14,9 @@ def generateStudents(n):
         genderList = ['m', 'f']
         for i in range(n):
             roll = "st_" + str(i)
-            #gender = random.choice(genderList)
-            gender = round(random.uniform(5.0,10.0), 2)
-            print(roll, gender, sep='\t', file=f)
+            gender = random.choice(genderList)
+            cpi = round(random.uniform(5.0,10.0), 2)
+            print(roll, gender, cpi, sep='\t', file=f)
             students.append(roll)
     
     return students
@@ -27,8 +27,7 @@ def generateProfs(n):
         genderList = ['m', 'f']
         for i in range(n):
             roll = "prof_" + str(i)
-            #gender = random.choice(genderList)
-            gender = round(random.uniform(5.0,10.0), 2)
+            gender = random.choice(genderList)
             print(roll, gender, sep='\t', file=f)
             profs.append(roll)
 

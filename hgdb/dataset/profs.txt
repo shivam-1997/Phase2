@@ -1,50 +1,50 @@
-prof_0
-prof_1
-prof_2
-prof_3
-prof_4
-prof_5
-prof_6
-prof_7
-prof_8
-prof_9
-prof_10
-prof_11
-prof_12
-prof_13
-prof_14
-prof_15
-prof_16
-prof_17
-prof_18
-prof_19
-prof_20
-prof_21
-prof_22
-prof_23
-prof_24
-prof_25
-prof_26
-prof_27
-prof_28
-prof_29
-prof_30
-prof_31
-prof_32
-prof_33
-prof_34
-prof_35
-prof_36
-prof_37
-prof_38
-prof_39
-prof_40
-prof_41
-prof_42
-prof_43
-prof_44
-prof_45
-prof_46
-prof_47
-prof_48
-prof_49
+prof_0	m
+prof_1	m
+prof_2	f
+prof_3	f
+prof_4	f
+prof_5	f
+prof_6	f
+prof_7	f
+prof_8	f
+prof_9	m
+prof_10	f
+prof_11	f
+prof_12	f
+prof_13	f
+prof_14	f
+prof_15	f
+prof_16	m
+prof_17	f
+prof_18	m
+prof_19	f
+prof_20	f
+prof_21	m
+prof_22	f
+prof_23	m
+prof_24	f
+prof_25	m
+prof_26	f
+prof_27	f
+prof_28	m
+prof_29	m
+prof_30	f
+prof_31	m
+prof_32	m
+prof_33	m
+prof_34	m
+prof_35	m
+prof_36	m
+prof_37	m
+prof_38	f
+prof_39	m
+prof_40	m
+prof_41	f
+prof_42	f
+prof_43	f
+prof_44	m
+prof_45	m
+prof_46	m
+prof_47	f
+prof_48	f
+prof_49	f

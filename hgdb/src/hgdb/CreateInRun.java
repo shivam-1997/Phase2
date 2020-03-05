@@ -31,12 +31,13 @@ public class CreateInRun {
 		    Iterator<String> itr = lines.iterator();
 		    while (itr.hasNext()) {
 		    	String nextLine = itr.next();
-		    	String[] arrOfStr = nextLine.split("\t", 2);
+		    	String[] arrOfStr = nextLine.split("\t", 3);
 		    	HashMap<String, String> data = new HashMap<String, String>();
 		    	data.put("type", "student");
 		    	data.put("roll", arrOfStr[0]);
 		    	data.put("name", arrOfStr[0]);
 		    	data.put("gender", arrOfStr[1]);
+		    	data.put("cpi", arrOfStr[2]);
 		    	Node student = new Node();
 		    	student.setData(data);
 		    	students.add(student);
@@ -319,7 +320,7 @@ public class CreateInRun {
 				e.printStackTrace();
 			}
 		    createGraph(graph);
-			
+			print("\n Enter the commands\n");
 //		    findStudentsUnderProf(graph);
 		    
 			Scanner sc = new Scanner(System.in);

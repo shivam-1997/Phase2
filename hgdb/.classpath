@@ -10,5 +10,6 @@
 	<classpathentry exported="true" kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/lib1.4/hgbdbje-1.4-20190610.013950-7.jar"/>
 	<classpathentry exported="true" kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/lib1.4/hgdb-1.4-20190721.181316-23.jar"/>
 	<classpathentry exported="true" kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/lib1.4/hgdbmjson-1.4-20180416.053845-8.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/lib1.4/je-5.0.34.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
