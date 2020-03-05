@@ -12,7 +12,9 @@ import org.hypergraphdb.util.Pair;
 import hgdb.Entities.*;
 
 public class CreateInRun {
-		
+		public static void print(String message) {
+			System.out.println(message);
+		}
 		public static Map<String, HGHandle> studentHandles = new HashMap<String, HGHandle>(25000);
 		public static Map<String, HGHandle> profHandles = new HashMap<String, HGHandle>(1000);
 		public static Map<String, HGHandle> projHandles = new HashMap<String, HGHandle>(1000);
@@ -218,7 +220,6 @@ public class CreateInRun {
 		
 		public static void createGraph(HyperGraph graph) {
 
-//			Importing data-set
 			addStudents("dataset/students.txt", graph);
 			addProfs("dataset/profs.txt", graph);
 			addProjs("dataset/projects.txt", graph);
@@ -235,16 +236,89 @@ public class CreateInRun {
 			System.out.println("Graph created");
 		}
 		
-		public static void main(String[] args) {
+		public static int createHyperEdge(long id, 
+											String[] sids_string_array, 
+											String destination_type, 
+											String attribute, 
+											String operator, 
+											String value) 
+		{
+			print("id: "+ id);
+			for(int i=0; i<sids_string_array.length; i++) {
+				print("source id"+ (i+1) + ": "+ sids_string_array[i]);
+			}
+			print("Destination: "+ destination_type);
+			print("attribute: "+ attribute);
+			print("operator: "+ operator);
+			print("value: "+  value);
+			
+			
+			return 1;
+		}
+ 		public static int createHyperEdge(String command) {
+
+			System.out.println("CREATING HYPEREDGE");
+			int i=0;
+			
+//			command: CREATE HYPEREDGE(
+			for(; command.charAt(i)!='('; i++);
+//			command: id, 
+			String id_string="";
+			for(i+=1; command.charAt(i)!=','; i++) {
+				id_string += command.charAt(i);
+			}
+			long id = Long.parseLong( id_string.trim() );
+//			command: (sid1, sid2, ...)
+			String sids_string="";
+			for(i+=1; command.charAt(i)!=')'; i++) {
+				if(command.charAt(i)=='(' ) {
+					continue;
+				}
+				sids_string += command.charAt(i);
+			}
+			String[] sids_string_array = sids_string.split(",");
+//			for(int j=0; j<sids_string_array.length)
+			
+//			command: ,
+			for(i+=1; command.charAt(i)!=','; i++);
+//			command: destination_type,
+			String destination_type="";
+			for(i+=1; command.charAt(i)!=','; i++) {
+				destination_type += command.charAt(i);
+			}
+			destination_type = destination_type.trim();
+//			command: attribute operator value)
+			String condition = "";
+			for(i+=1; command.charAt(i)!=')'; i++) {
+				condition += command.charAt(i);
+			}
+			condition = condition.trim();
+			String[] conditionStrings = condition.split(" ");
+			String attribute = conditionStrings[0];
+			String operator = conditionStrings[1];
+			String value = conditionStrings[2];
+			
+			return createHyperEdge(id, sids_string_array, destination_type, attribute, operator, value);
+		
+		}
+		
+ 		public static void main(String[] args) {
 			
 			String databaseLocation = "databases/University/";
 			File folder = new File(databaseLocation);
 			if(folder.exists())		Utils.deleteFolder(folder);
-			HGConfiguration config = Utils.setConfig();
 			
-			HyperGraph graph = HGEnvironment.get(databaseLocation, config);
-//		    HyperGraph graph = HGEnvironment.get(databaseLocation); 
-			createGraph(graph);
+			HyperGraph graph = new HyperGraph();
+			try {
+				
+//				HGConfiguration config = Utils.setConfig();
+//				graph = HGEnvironment.get(databaseLocation, config);
+				graph = HGEnvironment.get(databaseLocation); 
+			}catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+			}
+		    createGraph(graph);
 			
 //		    findStudentsUnderProf(graph);
 		    
@@ -252,26 +326,22 @@ public class CreateInRun {
 			String command = new String("exit");
 			do{
 				System.out.print("> ");
-				command = sc.nextLine();
+//				command = sc.nextLine();
+				command = "CREATE HYPEREDGE (123, (prof_2), student, cpi > 9);";
 				String[] arr = command.split(" ");
+				
 				if(arr[0].equalsIgnoreCase("CREATE")) {
 					// creation of a new hyperedge
-					System.out.println("CREATING HYPEREDGE");
-					int i=0;
-//					CREATE HYPEREDGE(
-					for(; command.charAt(i)!='('; i++);
-//					id, 
-					String id_string="";
-					for(; command.charAt(i)!=','; i++) {
-						id_string += command.charAt(i);
+					if(createHyperEdge(command)==1) {
+						System.out.println("Successfully created the hyperedge");
 					}
-					long id = Long.parseLong( id_string.trim() );
-					
-					createHyperEdge(id);
-					
+					else {
+						System.out.println("Error in hyperedge creation");
+					}	
 				}
+				command="exit";
 			}while(!command.equalsIgnoreCase("exit"));
-			
+			sc.close();
 		    graph.close();
 		}
 		
