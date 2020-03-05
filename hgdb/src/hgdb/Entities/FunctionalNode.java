@@ -1,14 +1,14 @@
-package hgdb;
+package hgdb.Entities;
+
+import java.util.HashMap;
 
 import org.hypergraphdb.HGHandle;
 import org.hypergraphdb.HyperGraph;
 import org.hypergraphdb.algorithms.*;
 import org.hypergraphdb.util.Pair;
 
-
-import hgdb.Entities.Student;
-
-public interface FunctionalNode {
+interface FunctionalNode {
+	
 	void trigger_function(HyperGraph graph, HGHandle handle);
 	int getRes();
 }
@@ -38,30 +38,7 @@ class CountMaleStudents implements FunctionalNode{
 	
 }
 
-class CountFemaleStudents implements FunctionalNode{
 
-	int res=0;
-
-	public CountFemaleStudents() {}
-
-	@Override
-	public int getRes() {	return res;	}
-	public void setRes(int res) {	this.res=res;	}
-
-	@Override
-	public void trigger_function(HyperGraph graph, HGHandle handle) {
-		// TODO Auto-generated method stub
-		Object obj = graph.get(handle);
-		if(obj.getClass()==Student.class)	{
-			Student studentObj = (Student)obj;
-			if(studentObj.getGender() == 'f') {
-				res++;
-			}
-		}
-//		System.out.print("female done\n");
-	}
-	
-}
 class CountStudents implements FunctionalNode{
 
 	int res=0;

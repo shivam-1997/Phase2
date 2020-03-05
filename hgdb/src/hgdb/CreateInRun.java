@@ -18,6 +18,7 @@ public class CreateInRun {
 		public static Map<String, HGHandle> studentHandles = new HashMap<String, HGHandle>(25000);
 		public static Map<String, HGHandle> profHandles = new HashMap<String, HGHandle>(1000);
 		public static Map<String, HGHandle> projHandles = new HashMap<String, HGHandle>(1000);
+		static HyperGraph graph = new HyperGraph();
 		
 		public static void addStudents(String fileName,  HyperGraph graph)
 		{ 
@@ -34,12 +35,13 @@ public class CreateInRun {
 		    	String[] arrOfStr = nextLine.split("\t", 3);
 		    	HashMap<String, String> data = new HashMap<String, String>();
 		    	data.put("type", "student");
-		    	data.put("roll", arrOfStr[0]);
-		    	data.put("name", arrOfStr[0]);
-		    	data.put("gender", arrOfStr[1]);
-		    	data.put("cpi", arrOfStr[2]);
+		    	data.put("roll", arrOfStr[0].trim());
+		    	data.put("name", arrOfStr[0].trim());
+		    	data.put("gender", arrOfStr[1].trim());
+		    	data.put("cpi", arrOfStr[2].trim());
 		    	Node student = new Node();
 		    	student.setData(data);
+		    	student.setId(arrOfStr[0].trim());
 		    	students.add(student);
 		    }
 		    
@@ -76,13 +78,13 @@ public class CreateInRun {
 		    	
 		    	HashMap<String, String> data = new HashMap<String, String>();
 		    	data.put("type", "professor");
-		    	data.put("roll", arrOfStr[0]);
-		    	data.put("name", arrOfStr[0]);
-		    	data.put("gender", arrOfStr[1]);
+		    	data.put("roll", arrOfStr[0].trim());
+		    	data.put("name", arrOfStr[0].trim());
+		    	data.put("gender", arrOfStr[1].trim());
 		    	
 		    	Node prof = new Node();
 		    	prof.setData(data);
-		    	
+		    	prof.setId(arrOfStr[0].trim());
 		    	profs.add(prof);
 		    }
 		    
@@ -116,11 +118,11 @@ public class CreateInRun {
 		    	String nextLine = itr.next();
 		    	HashMap<String, String> data = new HashMap<String, String>();
 		    	data.put("type", "project");
-		    	data.put("name", nextLine);
+		    	data.put("name", nextLine.trim());
 		    	
 		    	Node proj = new Node();
 		    	proj.setData(data);
-		    	
+		    	proj.setId(nextLine.trim());
 		    	projs.add(proj);
 		    }
 		    
@@ -248,14 +250,29 @@ public class CreateInRun {
 			for(int i=0; i<sids_string_array.length; i++) {
 				print("source id"+ (i+1) + ": "+ sids_string_array[i]);
 			}
-			print("Destination: "+ destination_type);
-			print("attribute: "+ attribute);
-			print("operator: "+ operator);
-			print("value: "+  value);
+			print("Destination: "+ destination_type+".");
+			print("attribute: "+ attribute+".");
+			print("operator: "+ operator+".");
+			print("value: "+  value+".");
 			
-			
+			HashMap<String, String> data = new HashMap<String, String>();
+	    	data.put("type", "hyperedge");
+	    	data.put("id", ""+id);
+	    	data.put("source", sids_string_array[0]);
+
+	    	data.put("destination", destination_type);
+	    	data.put("attribute", attribute);
+	    	data.put("operator", operator);
+	    	data.put("value", value);
+	    	HyperEdge he = new HyperEdge();
+			he.setData(data);
+			graph.add(he);
+			he.trigger_function(graph);
+			print("result: " +he.getRes());
+			print("count: " +  he.getCount());
 			return 1;
 		}
+		
  		public static int createHyperEdge(String command) {
 
 			System.out.println("CREATING HYPEREDGE");
@@ -295,9 +312,9 @@ public class CreateInRun {
 			}
 			condition = condition.trim();
 			String[] conditionStrings = condition.split(" ");
-			String attribute = conditionStrings[0];
-			String operator = conditionStrings[1];
-			String value = conditionStrings[2];
+			String attribute = conditionStrings[0].trim();
+			String operator = conditionStrings[1].trim();
+			String value = conditionStrings[2].trim();
 			
 			return createHyperEdge(id, sids_string_array, destination_type, attribute, operator, value);
 		
@@ -309,11 +326,11 @@ public class CreateInRun {
 			File folder = new File(databaseLocation);
 			if(folder.exists())		Utils.deleteFolder(folder);
 			
-			HyperGraph graph = new HyperGraph();
+			
 			try {
 				
-//				HGConfiguration config = Utils.setConfig();
-//				graph = HGEnvironment.get(databaseLocation, config);
+				HGConfiguration config = Utils.setConfig();
+				graph = HGEnvironment.get(databaseLocation, config);
 				graph = HGEnvironment.get(databaseLocation); 
 			}catch (Exception e) {
 				// TODO: handle exception
@@ -327,8 +344,8 @@ public class CreateInRun {
 			String command = new String("exit");
 			do{
 				System.out.print("> ");
-//				command = sc.nextLine();
-				command = "CREATE HYPEREDGE (123, (prof_2), student, cpi > 9);";
+				command = sc.nextLine();
+//				command = "CREATE HYPEREDGE (123, (prof_2), student, cpi > 9);";
 				String[] arr = command.split(" ");
 				
 				if(arr[0].equalsIgnoreCase("CREATE")) {
@@ -340,7 +357,7 @@ public class CreateInRun {
 						System.out.println("Error in hyperedge creation");
 					}	
 				}
-				command="exit";
+//				command="exit";
 			}while(!command.equalsIgnoreCase("exit"));
 			sc.close();
 		    graph.close();

@@ -26,6 +26,9 @@ import org.hypergraphdb.storage.bje.BJEConfig;
  */
 public class Utils {
 	private static final long MEGABYTE = 1024L * 1024L;
+	public static void print(String message) {
+		System.out.println(message);
+	}
 	
 	public static void printRAM(FileWriter fw) throws IOException {
 		long heapMaxSize = Runtime.getRuntime().maxMemory();
