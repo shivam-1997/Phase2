@@ -17,11 +17,16 @@ import org.hypergraphdb.util.Pair;
 
 import com.sleepycat.je.rep.impl.node.Feeder.ExitException;
 
-import hgdb.Utils;
-
 public class HyperEdge{
 	
 	HashMap<String, String> data;
+	String id;
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getId() {
+		return id;
+	}
 	int count=0;
 	String res="";
 	
@@ -42,7 +47,6 @@ public class HyperEdge{
     
 
 	public String getRes() {
-		// TODO Auto-generated method stub
 		return res;
 	}
 	public void setRes(String res) {
@@ -54,11 +58,12 @@ public class HyperEdge{
 	public void setCount(int count) {
 		this.count = count;
 	}
+
 	public int trigger_function(HyperGraph graph) {
 		count = 0;
 		res = "";
 		String source = data.get("source");
-//		print("source: in he." + source.trim()+".");
+
 		HGHandle sourceHandle = hg.findOne(graph, 
 								hg.and(
 										hg.type(Node.class),
@@ -89,14 +94,13 @@ public class HyperEdge{
 			
 //			Prof->Proj->Student
 			
-			
 			HGTraversal trav= new HGDepthFirstTraversal(sourceHandle, adjGen);
 			String operator = data.get("operator");
 	    	String attribute = data.get("attribute");
 	    	String value = data.get("value");
 	    	
 //	    	print("destination->" + data.get("destination")+".");
-//            print("attribute->" + attribute);
+//          print("attribute->" + attribute);
 //	    	print("value->"+value);
 		    
 			while(trav.hasNext()){

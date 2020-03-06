@@ -189,38 +189,6 @@ public class CreateInRun {
 		}
 	 			
 
-		public static void aQuery(HyperGraph graph) {
-
-			System.out.println("\nDepth first traversing started");
-			HGALGenerator adjGen = new DefaultALGenerator(graph);
-	        
-			// applying DFS
-			
-			HGTraversal trav= new HGDepthFirstTraversal(studentHandles.get("st_0"), adjGen);
-	        while(trav.hasNext()){
-	            Pair<HGHandle, HGHandle> pair = trav.next();
-	            Object nextElement = graph.get(pair.getSecond());
-	            Student next = (Student)nextElement;
-	            System.out.print("->" + next.getName());
-	        }    
-			System.out.println("\nTraversing done");
-			
-			
-			// applying BFS
-			System.out.println("BFS started");
-			HGTraversal BFS_trav = new HGBreadthFirstTraversal(studentHandles.get("st_0"), adjGen,1);
-			while(BFS_trav.hasNext()) {
-				Pair<HGHandle, HGHandle> pair = BFS_trav.next();
-	            Object nextElement = graph.get(pair.getSecond());
-	            Student next = (Student)nextElement;
-	            
-//	            Object firstElement = graph.get(pair.getFirst());
-//	            Student first = (Student)firstElement;
-	            System.out.println("->" + next.getName());
-			}
-			System.out.println("Done");
-		}
-		
 		public static void createGraph(HyperGraph graph) {
 
 			addStudents("dataset/students.txt", graph);
@@ -239,7 +207,7 @@ public class CreateInRun {
 			System.out.println("Graph created");
 		}
 		
-		public static int createHyperEdge(long id, 
+		public static int createHyperEdge(String id, 
 											String[] sids_string_array, 
 											String destination_type, 
 											String attribute, 
@@ -254,18 +222,26 @@ public class CreateInRun {
 			print("attribute: "+ attribute+".");
 			print("operator: "+ operator+".");
 			print("value: "+  value+".");
-			
-			HashMap<String, String> data = new HashMap<String, String>();
-	    	data.put("type", "hyperedge");
-	    	data.put("id", ""+id);
-	    	data.put("source", sids_string_array[0]);
 
+			HGHandle existingHandle = hg.findOne(graph, 
+									hg.and(	hg.type(HyperEdge.class),
+											hg.eq("id", id.trim()))
+									);
+			
+			if(existingHandle != null) {
+				print("Hyperedge with given id already exists.");
+				return -1;
+			}
+			HashMap<String, String> data = new HashMap<String, String>();
+			data.put("type", "hyperedge");
+	    	data.put("source", sids_string_array[0]);
 	    	data.put("destination", destination_type);
 	    	data.put("attribute", attribute);
 	    	data.put("operator", operator);
 	    	data.put("value", value);
 	    	HyperEdge he = new HyperEdge();
 			he.setData(data);
+			he.setId(id);
 			graph.add(he);
 			he.trigger_function(graph);
 			print("result: " +he.getRes());
@@ -281,11 +257,11 @@ public class CreateInRun {
 //			command: CREATE HYPEREDGE(
 			for(; command.charAt(i)!='('; i++);
 //			command: id, 
-			String id_string="";
+			String id="";
 			for(i+=1; command.charAt(i)!=','; i++) {
-				id_string += command.charAt(i);
+				id += command.charAt(i);
 			}
-			long id = Long.parseLong( id_string.trim() );
+//			long id = Long.parseLong( id_string.trim() );
 //			command: (sid1, sid2, ...)
 			String sids_string="";
 			for(i+=1; command.charAt(i)!=')'; i++) {
