@@ -4,6 +4,8 @@ import java.awt.List;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.hypergraphdb.HGHandle;
 import org.hypergraphdb.HGQuery.hg;
@@ -62,108 +64,122 @@ public class HyperEdge{
 	public int trigger_function(HyperGraph graph) {
 		count = 0;
 		res = "";
-		String source = data.get("source");
+		Set<String> finalSet = new HashSet<String>(); 
+		long n_sources = Long.parseLong(data.get("n_sources"));
+		
+		for(long i=0; i< n_sources; i++) {
+			print("source id"+ i + ": "+data.get("source"+ i));
+	    	String source = data.get("source"+ i);
+			
+			HGHandle sourceHandle = hg.findOne(graph, 
+									hg.and(
+											hg.type(Node.class),
+											hg.eq("id", source.trim())
+											)
+									);
+			
+			if(sourceHandle == null) {
+				print("No such source <"+ source+"> exists");
+				res = "";
+				count=0;
+				return -1;
+			}
+			
+//			Object sourceObject = graph.get(sourceHandle);
+//	        Node sourceNode = (Node)sourceObject;
+//		    print("The source is: "+ sourceNode.getId());
+			Set<String> resSet = new HashSet<String>(); 
+			
+			try {
+				
+				HGALGenerator adjGen = new DefaultALGenerator(graph, null, null , false, true, false);
+				
+	//			Prof->Proj->Student
+				
+				HGTraversal trav= new HGDepthFirstTraversal(sourceHandle, adjGen);
+				String operator = data.get("operator");
+		    	String attribute = data.get("attribute");
+		    	String value = data.get("value");
+		    	
+	//	    	print("destination->" + data.get("destination")+".");
+	//          print("attribute->" + attribute);
+	//	    	print("value->"+value);
 
-		HGHandle sourceHandle = hg.findOne(graph, 
-								hg.and(
-										hg.type(Node.class),
-										hg.eq("id", source.trim())
-										)
-								);
-		
-		if(sourceHandle == null) {
-			print("No such source exists");
-			return -1;
-		}
-		
-		Object sourceObject = graph.get(sourceHandle);
-        Node sourceNode = (Node)sourceObject;
-	    print("The source is: "+ sourceNode.getId());
-		
-		try {
-			
-//			DefaultALGenerator(HyperGraph hg,
-//	        HGAtomPredicate linkPredicate,
-//	        HGAtomPredicate siblingPredicate,
-//	        boolean returnPreceeding,
-//	        boolean returnSucceeding,
-//	        boolean reverseOrder)
-//			hg.type(HGPlainLink.class), hg.type(String.class),
-			
-			HGALGenerator adjGen = new DefaultALGenerator(graph, null, null , false, true, false);
-			
-//			Prof->Proj->Student
-			
-			HGTraversal trav= new HGDepthFirstTraversal(sourceHandle, adjGen);
-			String operator = data.get("operator");
-	    	String attribute = data.get("attribute");
-	    	String value = data.get("value");
-	    	
-//	    	print("destination->" + data.get("destination")+".");
-//          print("attribute->" + attribute);
-//	    	print("value->"+value);
-		    
-			while(trav.hasNext()){
-		        Pair<HGHandle, HGHandle> pair = trav.next();
-		        Object nextElement = graph.get(pair.getSecond());
-	            Node next = (Node)nextElement;
-//	            print(next.getData().get("type")+".");
-	            
-	            if(next.getData().get("type").equalsIgnoreCase(data.get("destination"))) {
-	            	
-	            	print(attribute + " of "+ data.get("destination") + " "+ next.getId()+": "+next.getData().get(attribute));
-	            	
-			    	if(operator.equalsIgnoreCase(">")) {
-			    		if(Double.valueOf(next.getData().get(attribute)) > 
-			    		Double.valueOf(value)) {
-			    			count++;
-			    			res += next.getData().get("name") +"\n";
-			    		}
-			    	}
-			    	else if(operator.equalsIgnoreCase(">=")) {
-			    		if(Double.valueOf(next.getData().get(attribute)) >= Double.valueOf(value)) {
-			    			count++;
-			    			res += next.getData().get("name") +"\n";
-			    		}
-			    	}
-			    	else if(operator.equalsIgnoreCase("<")) {
-			    		if(Double.valueOf(next.getData().get(attribute)) <= Double.valueOf(value)) {
-			    			count++;
-			    			res += next.getData().get("name") +"\n";
-			    		}
-			    	}
-			    	else if(operator.equalsIgnoreCase("<=")) {
-			    		if(Double.valueOf(next.getData().get(attribute)) <= Double.valueOf(value)) {
-			    			count++;
-			    			res += next.getData().get("name") +"\n";
-			    		}
-			    	}
-			    	else if(operator.equalsIgnoreCase("!=") || operator.equalsIgnoreCase("<>")) {
-			    		if( next.getData().get(attribute) != value) {
-			    			count++;
-			    			res += next.getData().get("name") +"\n";
-			    		}
-			    	}
-			    	else if(operator.equalsIgnoreCase("=")) {
-			    		if( next.getData().get(attribute) == value) {
-			    			count++;
-			    			res += next.getData().get("name") +"\n";
-			    		}
-			    	}
-			    	else {
-			    		print("Invalid operator");
-			    		return -1;
-			    	}
-			    }
+				while(trav.hasNext()){
+			        Pair<HGHandle, HGHandle> pair = trav.next();
+			        Object nextElement = graph.get(pair.getSecond());
+		            Node next = (Node)nextElement;
+//		            print(next.getData().get("type")+".");
 		            
-		    }
-
-			print("done");
-			
+		            if(next.getData().get("type").equalsIgnoreCase(data.get("destination"))) {
+		            	
+		            	print(attribute + " of "+ data.get("destination") + " "+ next.getId()+": "+next.getData().get(attribute));
+		            	boolean found = false;
+				    	if(operator.equalsIgnoreCase(">")) {
+				    		if(Double.valueOf(next.getData().get(attribute)) > 
+				    		Double.valueOf(value)) {
+//				    			res += next.getData().get("name") +"\n";
+				    			found = true;
+				    		}
+				    	}
+				    	else if(operator.equalsIgnoreCase(">=")) {
+				    		if(Double.valueOf(next.getData().get(attribute)) >= Double.valueOf(value)) {
+//				    			res += next.getData().get("name") +"\n";
+				    			found = true;
+				    		}
+				    	}
+				    	else if(operator.equalsIgnoreCase("<")) {
+				    		if(Double.valueOf(next.getData().get(attribute)) <= Double.valueOf(value)) {
+//				    			res += next.getData().get("name") +"\n";
+				    			found = true;
+				    		}
+				    	}
+				    	else if(operator.equalsIgnoreCase("<=")) {
+				    		if(Double.valueOf(next.getData().get(attribute)) <= Double.valueOf(value)) {
+//				    			res += next.getData().get("name") +"\n";
+				    			found = true;
+				    		}
+				    	}
+				    	else if(operator.equalsIgnoreCase("!=") || operator.equalsIgnoreCase("<>")) {
+				    		if( next.getData().get(attribute) != value) {
+//				    			res += next.getData().get("name") +"\n";
+				    			found = true;
+				    		}
+				    	}
+				    	else if(operator.equalsIgnoreCase("=")) {
+				    		if( next.getData().get(attribute) == value) {
+//				    			res += next.getData().get("name") +"\n";
+				    			found = true;
+				    		}
+				    	}
+				    	else {
+				    		print("Invalid operator");
+				    		return -1;
+				    	}
+				    	if(found ) {
+				    		resSet.add(next.getData().get("name"));
+				    	}
+				    }
+			            
+			    }
+				if(i==0) {
+					finalSet.addAll(resSet);
+				}
+				else {
+					finalSet.retainAll(resSet);
+				}
+			    
+				
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
+		count = finalSet.size();
+		res = finalSet.toString();
+	    
+		print("done");
+		
 		return 0;
 	}
 	public static void print(String message) {

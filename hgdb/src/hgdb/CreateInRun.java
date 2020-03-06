@@ -18,7 +18,8 @@ public class CreateInRun {
 		public static Map<String, HGHandle> studentHandles = new HashMap<String, HGHandle>(25000);
 		public static Map<String, HGHandle> profHandles = new HashMap<String, HGHandle>(1000);
 		public static Map<String, HGHandle> projHandles = new HashMap<String, HGHandle>(1000);
-		static HyperGraph graph = new HyperGraph();
+		static String databaseLocation = "databases/University/";
+		static File folder = new File(databaseLocation);
 		
 		public static void addStudents(String fileName,  HyperGraph graph)
 		{ 
@@ -207,49 +208,62 @@ public class CreateInRun {
 			System.out.println("Graph created");
 		}
 		
-		public static int createHyperEdge(String id, 
+		public static int createHyperEdge(HyperGraph graph, String id, 
 											String[] sids_string_array, 
 											String destination_type, 
 											String attribute, 
 											String operator, 
 											String value) 
 		{
-			print("id: "+ id);
-			for(int i=0; i<sids_string_array.length; i++) {
-				print("source id"+ (i+1) + ": "+ sids_string_array[i]);
-			}
-			print("Destination: "+ destination_type+".");
-			print("attribute: "+ attribute+".");
-			print("operator: "+ operator+".");
-			print("value: "+  value+".");
-
-			HGHandle existingHandle = hg.findOne(graph, 
-									hg.and(	hg.type(HyperEdge.class),
-											hg.eq("id", id.trim()))
-									);
 			
+			HGHandle existingHandle = hg.findOne(graph, 
+					hg.and(	hg.type(HyperEdge.class),
+							hg.eq("id", id.trim()))
+					);
+
 			if(existingHandle != null) {
 				print("Hyperedge with given id already exists.");
 				return -1;
 			}
+			
+			HyperEdge he = new HyperEdge();
 			HashMap<String, String> data = new HashMap<String, String>();
+			
 			data.put("type", "hyperedge");
-	    	data.put("source", sids_string_array[0]);
-	    	data.put("destination", destination_type);
-	    	data.put("attribute", attribute);
-	    	data.put("operator", operator);
-	    	data.put("value", value);
-	    	HyperEdge he = new HyperEdge();
-			he.setData(data);
+	    	
+			print("id: "+ id);
 			he.setId(id);
-			graph.add(he);
+			
+			data.put("n_sources", ""+sids_string_array.length);
+			for(int i=0; i<sids_string_array.length; i++) {
+				print("source id"+ i + ": "+ sids_string_array[i]);
+				data.put("source"+ i, sids_string_array[i]);
+		    	
+			}
+			
+			print("Destination: "+ destination_type+".");
+			data.put("destination", destination_type);
+	    	
+			print("attribute: "+ attribute+".");
+			data.put("attribute", attribute);
+	    	
+			print("operator: "+ operator+".");
+			data.put("operator", operator);
+	    	
+			print("value: "+  value+".");
+	    	data.put("value", value);
+	    	
+			
+			
+	    	he.setData(data);
+	    	graph.add(he);
 			he.trigger_function(graph);
 			print("result: " +he.getRes());
 			print("count: " +  he.getCount());
 			return 1;
 		}
 		
- 		public static int createHyperEdge(String command) {
+ 		public static int createHyperEdge(HyperGraph graph, String command) {
 
 			System.out.println("CREATING HYPEREDGE");
 			int i=0;
@@ -261,7 +275,6 @@ public class CreateInRun {
 			for(i+=1; command.charAt(i)!=','; i++) {
 				id += command.charAt(i);
 			}
-//			long id = Long.parseLong( id_string.trim() );
 //			command: (sid1, sid2, ...)
 			String sids_string="";
 			for(i+=1; command.charAt(i)!=')'; i++) {
@@ -271,8 +284,10 @@ public class CreateInRun {
 				sids_string += command.charAt(i);
 			}
 			String[] sids_string_array = sids_string.split(",");
-//			for(int j=0; j<sids_string_array.length)
-			
+			for(int j=0; j<sids_string_array.length; j++) {
+				sids_string_array[j] = sids_string_array[j].trim();
+			}
+
 //			command: ,
 			for(i+=1; command.charAt(i)!=','; i++);
 //			command: destination_type,
@@ -292,129 +307,47 @@ public class CreateInRun {
 			String operator = conditionStrings[1].trim();
 			String value = conditionStrings[2].trim();
 			
-			return createHyperEdge(id, sids_string_array, destination_type, attribute, operator, value);
+			return createHyperEdge(graph, id.trim(), sids_string_array, destination_type.trim(), attribute.trim(), operator.trim(), value.trim());
 		
 		}
 		
  		public static void main(String[] args) {
 			
-			String databaseLocation = "databases/University/";
-			File folder = new File(databaseLocation);
-			if(folder.exists())		Utils.deleteFolder(folder);
+ 			if(folder.exists())	Utils.deleteFolder(folder);
+ 			
+ 			HyperGraph graph = HGEnvironment.get(databaseLocation);
+ 		    
+			createGraph(graph);
 			
-			
+		    print("\n Enter the commands\n");
+
+		    Scanner sc = new Scanner(System.in);
+			String command = new String("exit");
 			try {
-				
-				HGConfiguration config = Utils.setConfig();
-				graph = HGEnvironment.get(databaseLocation, config);
-				graph = HGEnvironment.get(databaseLocation); 
-			}catch (Exception e) {
-				// TODO: handle exception
+				do{
+					System.out.print("> ");
+					command = sc.nextLine();
+//					command = "CREATE HYPEREDGE (123, (prof_2), student, cpi > 9);";
+//					CREATE HYPEREDGE (121, (prof_0, prof_2), student, cpi > 9);
+					String[] arr = command.split(" ");
+					
+					if(arr[0].trim().equalsIgnoreCase("CREATE")) {
+						// creation of a new hyperedge
+						if(createHyperEdge(graph, command)==1) {
+							System.out.println("Successfully created the hyperedge");
+						}
+						else {
+							System.out.println("Error in hyperedge creation");
+						}	
+					}
+	//				command="exit";
+				}while(!command.equalsIgnoreCase("exit"));
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}
-		    createGraph(graph);
-			print("\n Enter the commands\n");
-//		    findStudentsUnderProf(graph);
-		    
-			Scanner sc = new Scanner(System.in);
-			String command = new String("exit");
-			do{
-				System.out.print("> ");
-				command = sc.nextLine();
-//				command = "CREATE HYPEREDGE (123, (prof_2), student, cpi > 9);";
-				String[] arr = command.split(" ");
-				
-				if(arr[0].equalsIgnoreCase("CREATE")) {
-					// creation of a new hyperedge
-					if(createHyperEdge(command)==1) {
-						System.out.println("Successfully created the hyperedge");
-					}
-					else {
-						System.out.println("Error in hyperedge creation");
-					}	
-				}
-//				command="exit";
-			}while(!command.equalsIgnoreCase("exit"));
 			sc.close();
 		    graph.close();
-		}
-		
-		public static void findStudentsUnderProf(HyperGraph graph) {
-		try {
-				
-			FileWriter fw = new FileWriter("reports/studentsUnderProf.txt");
-			Utils.print("\nWill find all the students under a professor\n", fw);
-//			DefaultALGenerator(HyperGraph hg,
-//	        HGAtomPredicate linkPredicate,
-//	        HGAtomPredicate siblingPredicate,
-//	        boolean returnPreceeding,
-//	        boolean returnSucceeding,
-//	        boolean reverseOrder)
-//			hg.type(HGPlainLink.class), hg.type(String.class),
-			long start_time;
-			long end_time;
-		    long time_taken;
-		    
-			start_time = System.nanoTime();
-			
-			HGALGenerator adjGen = new DefaultALGenerator(graph, null, null , false, true, false);
-			end_time = System.nanoTime();
-			time_taken = (end_time- start_time)/1000;
-			Utils.print("Adjacency list took "+ time_taken + "us.\n", fw);
-	        
-			// applying DFS
-			
-//			Prof->Proj->Student
-			
-			int prof_i=0;
-			int student_count;
-			int project_count;
-			long max_time=0, max_time_students=0, max_time_proj=0;
-			while(prof_i<1000) {
-				student_count=0;
-				project_count=0;
-				Utils.print("prof_"+prof_i+"\n\t[",fw);
-
-				start_time = System.nanoTime();
-				HGTraversal trav= new HGDepthFirstTraversal(profHandles.get("prof_"+prof_i), adjGen);
-				while(trav.hasNext()){
-			        Pair<HGHandle, HGHandle> pair = trav.next();
-			        Object nextElement = graph.get(pair.getSecond());
-			//            Student next = (Student)nextElement;
-			//            System.out.print("->" + next.getName());
-			        if(nextElement.getClass()==Student.class) {
-			        	
-//			        	System.out.println(student_count + ":"+ ((Student)nextElement).getName());
-			        	student_count++;
-			        }
-			        else if(nextElement.getClass()==Project.class) {
-			        	
-//			        	System.out.println(student_count + ":"+ ((Student)nextElement).getName());
-			        	project_count++;
-			        }
-			        
-			    }
-				end_time = System.nanoTime();
-				time_taken = (end_time- start_time)/1000000;
-				Utils.print(student_count+" students, "+project_count+" projects present] "+ time_taken + "ms.\n", fw);
-
-				if(time_taken>max_time) {
-					max_time = time_taken;
-					max_time_students = student_count;
-					max_time_proj = project_count;
-				}
-				prof_i++;
-			}
-			
-			Utils.print("done",fw);
-			Utils.print("\nMaximum time take was "+max_time+"ms for "+ max_time_proj +" projects and "+ max_time_students+" students.", fw );
-			fw.close();
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-		}
-			
-			
 		}
 		
 	}
