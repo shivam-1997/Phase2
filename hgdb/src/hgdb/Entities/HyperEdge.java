@@ -1,15 +1,11 @@
 package hgdb.Entities;
 
-import java.awt.List;
-import java.io.FileWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.hypergraphdb.HGHandle;
 import org.hypergraphdb.HGQuery.hg;
-import org.hypergraphdb.HGQuery.hg.*;
 import org.hypergraphdb.HyperGraph;
 import org.hypergraphdb.algorithms.DefaultALGenerator;
 import org.hypergraphdb.algorithms.HGALGenerator;
@@ -17,7 +13,6 @@ import org.hypergraphdb.algorithms.HGDepthFirstTraversal;
 import org.hypergraphdb.algorithms.HGTraversal;
 import org.hypergraphdb.util.Pair;
 
-import com.sleepycat.je.rep.impl.node.Feeder.ExitException;
 
 public class HyperEdge{
 	

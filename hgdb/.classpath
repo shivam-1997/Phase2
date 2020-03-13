@@ -6,10 +6,24 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="java"/>
 	<classpathentry exported="true" kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/postgresql-42.2.10.jar"/>
 	<classpathentry exported="true" kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/lib1.4/hgbdbje-1.4-20190610.013950-7.jar"/>
 	<classpathentry exported="true" kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/lib1.4/hgdb-1.4-20190721.181316-23.jar"/>
 	<classpathentry exported="true" kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/lib1.4/hgdbmjson-1.4-20180416.053845-8.jar"/>
 	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/lib1.4/je-5.0.34.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/piccolox.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/piccolo.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/org-netbeans-swing-outline.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/l2fprod-common-sheet.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/freehep-graphicsio-swf.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/freehep-graphicsio-svg.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/freehep-graphicsio-ps.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/freehep-graphicsio-pdf.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/freehep-graphicsio-gif.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/freehep-graphicsio.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/freehep-graphics2d.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/freehep-base.jar"/>
+	<classpathentry kind="lib" path="/home/shivam/IIT/MTP/Phase2/resources/viewer-master/jars/com-nerius-math-xform.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

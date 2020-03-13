@@ -2,14 +2,13 @@ package hgdb;
 
 import java.io.*;
 import java.util.*;
+
+
 import org.hypergraphdb.*;
 import org.hypergraphdb.HGQuery.hg;
-import org.hypergraphdb.algorithms.*;
-import org.hypergraphdb.handle.SequentialUUIDHandleFactory;
-import org.hypergraphdb.indexing.ByPartIndexer;
-import org.hypergraphdb.storage.bje.BJEConfig;
-import org.hypergraphdb.util.Pair;
+
 import hgdb.Entities.*;
+import hgdb.ut.ShowGraph;
 
 public class CreateInRun {
 		public static void print(String message) {
@@ -316,23 +315,40 @@ public class CreateInRun {
  			if(folder.exists())	Utils.deleteFolder(folder);
  			
  			HyperGraph graph = HGEnvironment.get(databaseLocation);
- 		    
-			createGraph(graph);
-			
-		    print("\n Enter the commands\n");
+ 			
+ 			createGraph(graph);
+ 			
+ 			ShowGraph.showGraph(graph);
+ 			
+ 			startCLI(graph);
+		    
+ 			graph.close();
+		}
+		
+ 		public static void startCLI(HyperGraph graph) {
+ 			print("\n Enter the commands\n");
 
 		    Scanner sc = new Scanner(System.in);
-			String command = new String("exit");
+			String command = "";
 			try {
-				do{
+				while(true){
 					System.out.print("> ");
-					command = sc.nextLine();
-//					command = "CREATE HYPEREDGE (123, (prof_2), student, cpi > 9);";
-//					CREATE HYPEREDGE (121, (prof_0, prof_2), student, cpi > 9);
+					command += sc.nextLine().trim();
+					if(command.charAt(command.length()-1)!=';') {
+						continue;
+					}
+					else {
+						command = command.replace(';', ' ');
+					}
+					print("command: " + command);
 					String[] arr = command.split(" ");
+					
 					
 					if(arr[0].trim().equalsIgnoreCase("CREATE")) {
 						// creation of a new hyperedge
+//						command = "CREATE HYPEREDGE (123, (prof_2), student, cpi > 9);";
+//						CREATE HYPEREDGE (121, (prof_0, prof_2), student, cpi > 9);
+
 						if(createHyperEdge(graph, command)==1) {
 							System.out.println("Successfully created the hyperedge");
 						}
@@ -340,14 +356,20 @@ public class CreateInRun {
 							System.out.println("Error in hyperedge creation");
 						}	
 					}
-	//				command="exit";
-				}while(!command.equalsIgnoreCase("exit"));
+					else if(arr[0].trim().equalsIgnoreCase("showgraph")) {
+						ShowGraph.showGraph(graph);
+					}
+					else if(command.equalsIgnoreCase("exit")) {
+						break;
+					}
+					command="";
+				}
 			}
 			catch (Exception e) {
 				e.printStackTrace();
 			}
 			sc.close();
-		    graph.close();
-		}
-		
-	}
+
+ 		}
+
+}
