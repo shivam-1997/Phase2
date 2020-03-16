@@ -1,40 +1,47 @@
 // creating a type
+
 // professor
 {
-“command”: “create_table”,
-“name”: “professor”,
-“attributes”: [
-	{ “attr”: “attr1”, “type”: “type1” },
-	{ “attr”: “attrn”, “type”: “typen” }
-],
-"key": "attrl",
-“foreign key”: “attri”,
-“refered table”: “another_table_name”,
-“referred attr”: “attrk”
+   "command":"create_table",
+   "name":"professor",
+   "attributes":[
+      {
+         "attribute":"attr1",
+         "type":"type1"
+      }
+   ],
+   "foreign key":null,
+   "key":"attrl",
+   "refered table":"another_table_name",
+   "referred attr":"attrk"
 }
-
-// project
+// professor
 {
-“command”: “create_table”,
-“name”: “professor”,
-“attributes”: [
-	{ “attr”: “attr1”, “type”: “type1” },
-	{ “attr”: “attrn”, “type”: “typen” }
-],
-“foreign key”: “attri”,
-“refered table”: “another_table_name”,
-“referred attr”: “attrk”
+   "command":"create_table",
+   "name":"professor",
+   "attributes":[
+      {
+         "attribute":"attr1",
+         "type":"type1"
+      }
+   ],
+   "foreign key":null,
+   "key":"attrl",
+   "refered table":"another_table_name",
+   "referred attr":"attrk"
 }
-
-//Student
+// professor
 {
-“command”: “create_table”,
-“name”: “student”,
-“attributes”: [
-	{ “attr”: “attr1”, “type”: “type1” },
-	{ “attr”: “attrn”, “type”: “typen” }
-],
-“foreign key”: “attri”,
-“refered table”: “another_table_name”,
-“referred attr”: “attrk”
+   "command":"create_table",
+   "name":"professor",
+   "attributes":[
+      {
+         "attribute":"attr1",
+         "type":"type1"
+      }
+   ],
+   "foreign key":null,
+   "key":"attrl",
+   "refered table":"another_table_name",
+   "referred attr":"attrk"
 }
