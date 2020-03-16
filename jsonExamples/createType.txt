@@ -1,0 +1,39 @@
+// creating a type
+// professor
+{
+“command”: “create_table”,
+“name”: “professor”,
+“attributes”: [
+	{ “name”: “attr1”, “type”: “type1” },
+	{ “name”: “attrn”, “type”: “typen” }
+],
+“foreign key”: “attri”,
+“refered table”: “another_table_name”,
+“referred attr”: “attrk”
+}
+
+// project
+{
+“command”: “create_table”,
+“name”: “professor”,
+“attributes”: [
+	{ “name”: “attr1”, “type”: “type1” },
+	{ “name”: “attrn”, “type”: “typen” }
+],
+“foreign key”: “attri”,
+“refered table”: “another_table_name”,
+“referred attr”: “attrk”
+}
+
+//Student
+{
+“command”: “create_table”,
+“name”: “student”,
+“attributes”: [
+	{ “name”: “attr1”, “type”: “type1” },
+	{ “name”: “attrn”, “type”: “typen” }
+],
+“foreign key”: “attri”,
+“refered table”: “another_table_name”,
+“referred attr”: “attrk”
+}
