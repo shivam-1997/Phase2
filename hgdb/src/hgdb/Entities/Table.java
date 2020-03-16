@@ -29,6 +29,14 @@ public class Table {
     	return attributes;
     }
     
+    String key;
+    public void setKey(String key) {
+		this.key = key;
+	}
+    public String getKey() {
+    	return key;
+    }    
+
     String foreignKey;
     public void setForeignKey(String foreignKey) {
 		this.foreignKey = foreignKey;
@@ -36,6 +44,7 @@ public class Table {
     public String getForeignKey() {
     	return foreignKey;
     }    
+
     String referredTable;
     public void setReferredTable(String name) {
 		this.referredTable = name;
@@ -59,11 +68,13 @@ public class Table {
 	
 	public Table(String name, 
 				HashMap<String, String> attributes,
+				String key,
 				String foreignKey,
 				String referredTable,
 				String referredAttr) {
 		setName(name);
 		setAttributes(attributes);
+		setKey(key);
 		setForeignKey(foreignKey);
 		setReferredTable(referredTable);
 		setReferredAttr(referredAttr);

@@ -4,9 +4,10 @@
 “command”: “create_table”,
 “name”: “professor”,
 “attributes”: [
-	{ “name”: “attr1”, “type”: “type1” },
-	{ “name”: “attrn”, “type”: “typen” }
+	{ “attr”: “attr1”, “type”: “type1” },
+	{ “attr”: “attrn”, “type”: “typen” }
 ],
+"key": "attrl",
 “foreign key”: “attri”,
 “refered table”: “another_table_name”,
 “referred attr”: “attrk”
@@ -17,8 +18,8 @@
 “command”: “create_table”,
 “name”: “professor”,
 “attributes”: [
-	{ “name”: “attr1”, “type”: “type1” },
-	{ “name”: “attrn”, “type”: “typen” }
+	{ “attr”: “attr1”, “type”: “type1” },
+	{ “attr”: “attrn”, “type”: “typen” }
 ],
 “foreign key”: “attri”,
 “refered table”: “another_table_name”,
@@ -30,8 +31,8 @@
 “command”: “create_table”,
 “name”: “student”,
 “attributes”: [
-	{ “name”: “attr1”, “type”: “type1” },
-	{ “name”: “attrn”, “type”: “typen” }
+	{ “attr”: “attr1”, “type”: “type1” },
+	{ “attr”: “attrn”, “type”: “typen” }
 ],
 “foreign key”: “attri”,
 “refered table”: “another_table_name”,
