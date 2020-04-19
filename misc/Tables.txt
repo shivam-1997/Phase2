@@ -1,0 +1,42 @@
+Tables:
+NODES
+Professor
+	Name(primary)	|	gender
+	Prof_0			|	m
+	Prof_1			|	f
+	Prof_2			|	m
+
+Project
+	Name(primary)
+	Proj_0
+	Proj_1
+	Proj_2
+
+Students
+	Roll(primary)	| gender	| CPI
+	Stud_0			| m			| 9.2
+	Stud_1			| f			| 8.5
+	Stud_2			| m			| 8.7
+	Stud_3			| m			| 8.1
+	Stud_4			| f			| 9.1
+	Stud_5			| f			| 9.3
+
+RELATIONSHIP
+Professor_Project
+	Prof 	| Proj
+	Prof_0	| Proj_0
+	Prof_1	| Proj_0
+	Prof_1	| Proj_1
+	Prof_1	| Proj_2
+	Prof_2	| Proj_2
+
+Project_Student
+	Proj 	| Stud
+	Proj_0 	| Stud_0
+	Proj_0 	| Stud_1
+	Proj_0 	| Stud_2
+	Proj_0 	| Stud_4
+	Proj_1 	| Stud_2
+	Proj_1 	| Stud_3
+	Proj_2 	| Stud_4
+	Proj_2 	| Stud_5

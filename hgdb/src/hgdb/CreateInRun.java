@@ -18,8 +18,6 @@ public class CreateInRun {
 		static String databaseLocation = "databases/University/";
 		static File folder = new File(databaseLocation);
 		
-		
-		
  		public static void main(String[] args) {
 			
  			if(folder.exists())	Utils.deleteFolder(folder);
@@ -28,8 +26,9 @@ public class CreateInRun {
  			
 			CLI cli = new CLI();
 			
-			cli.createGraph(graph);
- 			ShowGraph.showGraph(graph);
+			cli.createGraph(graph); 
+ 			
+			ShowGraph.showGraph(graph);
  			
  			cli.startCLI(graph);
  			

@@ -1,0 +1,77 @@
+{
+   *"command":"create_hyperedge",
+   *"id": "hyperedge_id",
+    "source_id":"prof_1",
+   *"destination_type":"student",
+
+    "having":[ "attribute", "operator", "value"],
+
+    (* for count and distance)
+    "connected":{
+       "idOrType": "id or type",
+       "name": "id ortype_name"
+       },
+   
+    "count": ["operator", "value"],
+    "distance": ["operator", "value"]
+}
+
+
+{
+   "command":"create_hyperedge",
+   "id": "he_1",
+   "source_id":"prof_1",
+   "destination_type":"student",
+   "having":[ "cpi", ">", "9"]
+}
+;
+
+{
+   "command":"create_hyperedge",
+   "id": "he_2",
+   "source_id":"prof_1",
+   "destination_type":"student",
+}
+;
+
+{
+   "command":"create_hyperedge",
+   "id": "he_3",
+   "source_id":"prof_1",
+   "destination_type":"student",
+
+   "connected":{
+      "idOrType": "type",
+      "name": "student"
+   }
+}
+;
+
+{
+   "command":"create_hyperedge",
+   "id": "he_4",
+   "source_id":"prof_1",
+   "destination_type":"student",
+
+   "connected":{
+      "idOrType": "id",
+      "name": "prof_2"
+   }
+}
+;
+
+{
+   "command":"create_hyperedge",
+   "id": "he_5",
+   "source_id":"prof_1",
+   "destination_type":"student",
+
+   "connected":{
+      "idOrType": "id",
+      "name": "prof_2"
+   }
+
+    "count": [">", "3"],
+    "distance": ["operator", "value"]
+}
+;

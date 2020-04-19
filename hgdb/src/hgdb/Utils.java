@@ -17,13 +17,7 @@ import org.hypergraphdb.HGConfiguration;
 import org.hypergraphdb.handle.SequentialUUIDHandleFactory;
 import org.hypergraphdb.storage.bje.BJEConfig;
 
-//import org.hypergraphdb.*;
 
-//
-/**
- * @author shivam
- *
- */
 public class Utils {
 	private static final long MEGABYTE = 1024L * 1024L;
 	public static void print(String message) {
@@ -67,7 +61,7 @@ public class Utils {
 //		BJEConfig storeConfig = (BJEConfig) config.getStoreImplementation().getConfiguration();
 //		storeConfig.getEnvironmentConfig().setCacheSize(1024 * 1024 * 1000);
 		
-		return config;		
+		return config;		 
 	}
 	
 	public static List<String> getAllLines(String fileName){
