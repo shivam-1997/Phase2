@@ -29,7 +29,6 @@ public class CreateInRun {
 			cli.createGraph(graph); 
  			
 			ShowGraph.showGraph(graph);
- 			
  			cli.startCLI(graph);
  			
  			graph.close();

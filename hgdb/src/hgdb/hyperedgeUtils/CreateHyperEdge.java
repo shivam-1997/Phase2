@@ -15,7 +15,10 @@ public class CreateHyperEdge {
 	public static void print(String msg) {
 		System.out.println(msg);
 	}
-	
+	/*
+	 * searches the graph if there already exists a hyperedge with given id
+	 * returns true if hyperedge with given id is found, else return false.
+	 */
 	public static boolean isHEPresent(HyperGraph graph, String id) {
 		HGHandle existingHandle = hg.findOne(graph, 
 				hg.and(	hg.type(HyperEdge.class),
@@ -25,9 +28,7 @@ public class CreateHyperEdge {
 		return false;
 		
 	}
-	/*
-	 * create a hyperedge
-	 */
+	
 	public static int createHyperEdge(HyperGraph graph, String id, 
 			String[] sids_string_array, 
 			String destination_type, 

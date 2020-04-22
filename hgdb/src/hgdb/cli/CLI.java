@@ -322,25 +322,32 @@ public class CLI {
 					continue;
 				}
 				print("json: "+ sqlStmt);
-				JSONObject json = (JSONObject) parser.parse(sqlStmt);
-			/*
-				String[] arr = sqlStmt.split(" ");
-				String command = arr[0].trim();
+				JSONObject json = null;
+				try {					
+					json = (JSONObject) parser.parse(sqlStmt);
+					/*
+					String[] arr = sqlStmt.split(" ");
+					String command = arr[0].trim();
 
-				if(command.equalsIgnoreCase("exit")) {
-					break;
+					if(command.equalsIgnoreCase("exit")) {
+						break;
+					}
+					processCommand(command, sqlStmt);
+					command="";
+				*/
+					String command = (String) json.get("command");
+					
+					processCommand(command, json);
 				}
-				processCommand(command, sqlStmt);
-				command="";
-			*/
-				String command = (String) json.get("command");
-				
-				processCommand(command, json);
-				sqlStmt = "";
-
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				finally {
+					sqlStmt = "";
+				}
+			
 			}
 		}
-
 		catch (Exception e) {
 			e.printStackTrace();
 		}

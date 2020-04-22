@@ -1,13 +1,9 @@
 package hgdb.Entities;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
-import javax.print.DocFlavor.STRING;
-
 import org.hypergraphdb.HGHandle;
 import org.hypergraphdb.HGQuery.hg;
 import org.hypergraphdb.HyperGraph;
@@ -83,7 +79,7 @@ public class HyperEdge{
 		
 			try {
 				
-				HGALGenerator adjGen = new DefaultALGenerator(graph, null, null , false, true, false);
+				HGALGenerator adjGen = new DefaultALGenerator(graph, null, null , true, true, false, false);
 				
 	//			Prof->Proj->Student
 				
@@ -215,7 +211,8 @@ public class HyperEdge{
 		
 		Set<String> resSet = new HashSet<String>();
 		try {
-			HGALGenerator adjGen = new DefaultALGenerator(graph, null, null , false, true, false);
+			HGALGenerator adjGen = new DefaultALGenerator(graph, /*linkPredicate*/null, null , false, true, false, false);
+			HGALGenerator adjGen_fromDestination = new DefaultALGenerator( graph, null, null, true, true, false, true);
 			HGTraversal trav= new HGDepthFirstTraversal(sourceHandle, adjGen);		
 				
 			while(trav.hasNext()){
@@ -224,6 +221,10 @@ public class HyperEdge{
 			    Pair<HGHandle, HGHandle> pair = trav.next();
 			    HGHandle destinationHandle = pair.getSecond();
 			    Object nextElement = graph.get(destinationHandle);
+			    
+			    if(nextElement.getClass()!=Node.class) {
+			    	continue;
+			    }
 		        Node next = (Node)nextElement;
 	//	        print(next.getData().get("type")+".");
 		            
@@ -266,13 +267,15 @@ public class HyperEdge{
 		            
 		            HGTraversal travFromDestination = null;
 
-	            	travFromDestination = new HGBreadthFirstTraversal(destinationHandle, adjGen);
+//	            	travFromDestination = new HGBreadthFirstTraversal(destinationHandle, adjGen);
 		            if(data.containsKey("distance")) {
-		            	travFromDestination = new HGDepthFirstTraversal(destinationHandle, adjGen);
-		            }
+		            	Iterator distance_itr  = ((JSONArray)data.get("distance")).iterator();
+		            	String distance_operator = (String)distance_itr.next();
+		            	int distance = Integer.parseInt((String)distance_itr.next());
+		            	travFromDestination = new HGBreadthFirstTraversal(destinationHandle, adjGen_fromDestination, distance);
+			        }
 		            else {
-		            	
-		            	travFromDestination = new HGBreadthFirstTraversal(destinationHandle, adjGen);
+		            	travFromDestination = new HGBreadthFirstTraversal(destinationHandle, adjGen_fromDestination);
 		            }
 			        
 		            Double countNodesFromDestination = 0.0;
@@ -281,29 +284,40 @@ public class HyperEdge{
 		        	String idOrType_name = connectedMap.get("name");
 //		        	print("idOrType = " + connectedMap.get("idOrType"));
 //		        	print("idOrType_name =" + connectedMap.get("name"));
-		            
-		        	// traverse in travFromDestination
+		            print("BFS traversal started");
+		            int BFScount =0;
 			        while(travFromDestination.hasNext()) {
-			 
-		        	   Pair<HGHandle, HGHandle> pairFromDestination = travFromDestination.next();
-		        	   HGHandle fromDestinationHandle = pairFromDestination.getSecond();
-				       Node nextNodeFromDestination = (Node)graph.get(fromDestinationHandle);
-				       print(nextNodeFromDestination.getData().get("type")+".");
-				       if(	idOrType.equalsIgnoreCase("type") 
-							   &&
-							 nextNodeFromDestination.getType()
+			        	/*
+						 * [TEMPORARY]
+						 * lets display the BFS traversal
+						 */
+			        	
+			        	Pair<HGHandle, HGHandle> pairFromDestination = travFromDestination.next();
+			        	HGHandle fromDestinationHandle = pairFromDestination.getSecond();
+			        	Object nextAtomFromDetination = graph.get(fromDestinationHandle);
+
+			        	BFScount++;
+			        	print("BFS Count:" + BFScount + " - " + nextAtomFromDetination.getClass());
+			        	if(nextAtomFromDetination.getClass()!=Node.class) {
+			        		continue;
+			        	}
+			        	Node nextNodeFromDestination = (Node)nextAtomFromDetination;
+					    print(nextNodeFromDestination.getData().get("type")+".");
+					    if(	idOrType.equalsIgnoreCase("type") 
+						   &&
+						 nextNodeFromDestination.getType()
 									 .equalsIgnoreCase(idOrType_name)
 						) {
-				        	
-				    	   countNodesFromDestination += 1.0;
-					   }
-					   else if( nextNodeFromDestination.getId()
+					        	
+					       countNodesFromDestination += 1.0;
+						}
+						else if( nextNodeFromDestination.getId()
 									 .equalsIgnoreCase(idOrType_name)
 						) {	
 						   countNodesFromDestination += 1.0;
-					   }
-			        
+						 }
 			        }
+			        print("BFS traversal completed");
 			            
 			        
 /*
@@ -326,10 +340,14 @@ public class HyperEdge{
 			}
 		}
 		catch (Exception e) {
+			res = "";
+			count = 0;
 			e.printStackTrace();
 		}
+		
 		res = resSet.toString();
 		count = resSet.size();
+		
 		return 1;
 	}
 	
@@ -375,8 +393,6 @@ public class HyperEdge{
 	public void setCount(int count) {
 		this.count = count;
 	}
-
-
 	
 	public boolean performComparison(Node node, String attribute, String operator, String value) {
     	
@@ -432,7 +448,6 @@ public class HyperEdge{
     	
     	return found;
 	}
-	
 	
 	public boolean performComparison(Double a, String operator, Double b) {
     	print("count:" + a + operator + b);
