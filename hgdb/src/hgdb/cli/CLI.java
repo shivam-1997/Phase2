@@ -283,7 +283,15 @@ public class CLI {
 				System.out.println("Error in hyperedge creation");
 			}	
 		}
-
+//		creating nested hyperedge
+		else if(command.equalsIgnoreCase("CREATE_NESTED_HYPEREDGE")) {
+			if(CreateHyperEdge.createNestedHyperEdge(graph, json) >= 0) {
+				System.out.println("Successfully created the nested-hyperedge");
+			}
+			else {
+				System.out.println("Error in nested-hyperedge creation");
+			}	
+		}
 		return 1;
 		
 	}

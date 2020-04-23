@@ -1,6 +1,6 @@
 {
 	"command":"create_nested_hyperedge",
-	"id":"some_id",
-	"base_ids":["he_1", "he_2", ...],
-	"operation":"union" or "intersection"
-}
+	"id":"nhe_1",
+	"base_ids":["he_1", "he_2"],
+	"operation":"union"
+};

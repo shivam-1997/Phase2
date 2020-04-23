@@ -7,6 +7,7 @@ import org.hypergraphdb.HyperGraph;
 import org.json.simple.JSONObject;
 
 import hgdb.Entities.HyperEdge;
+import hgdb.Entities.NestedHyperEdge;
 
 import org.hypergraphdb.HGQuery.hg;
 
@@ -163,4 +164,41 @@ public class CreateHyperEdge {
 			return -1;
 		}
 	}
+
+	public static int createNestedHyperEdge(HyperGraph graph, JSONObject json) {
+		print("*** creating nested-hyperedge from json ***");
+		try {
+			
+			if(isHEPresent(graph, (String)json.get("id"))) {
+				print("Nested Hyperedge with given id already exists.");
+				return -1;
+			}
+
+			NestedHyperEdge he = new NestedHyperEdge();
+			he.setId( (String)json.get("id") ); 
+			
+			he.setData(json);
+
+//			adding the he as a node
+			HGHandle heHandle = graph.add(he);
+//			query to find the handle of the HYPEREDGE type node
+			HGHandle rootHandle = graph.findOne( hg.type(HyperEdge.class) );
+//			adding a link from root node to he
+			graph.add(new HGValueLink("hyperedge_node", rootHandle, heHandle));
+			
+			print("*** Hyperedge created ***");
+			
+//			triggering the he
+			he.trigger_function(graph);
+			print("\nresult: " +he.getRes());
+			print("count: " +  he.getCount());
+			return 0;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
 }

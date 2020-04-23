@@ -16,7 +16,7 @@
     "distance": ["operator", "value"]
 }
 
-
+// students under prof_1 having cpi greater than 9
 {
    "command":"create_hyperedge",
    "id": "he_1",
@@ -26,14 +26,16 @@
 }
 ;
 
+// students under prof_0
 {
    "command":"create_hyperedge",
    "id": "he_2",
-   "source_id":"prof_1",
+   "source_id":"prof_0",
    "destination_type":"student",
 }
 ;
 
+// students under prof_1 also connected to some other student
 {
    "command":"create_hyperedge",
    "id": "he_3",
