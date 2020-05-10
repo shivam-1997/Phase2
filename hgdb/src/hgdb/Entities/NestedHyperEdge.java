@@ -83,8 +83,10 @@ public class NestedHyperEdge{
 
 		        String[] he_res_array = he_res.split(","); 
 		  
-		        for (String str : he_res_array)
+		        for (String str : he_res_array) {
+		        	print(str);
 		        	he_resSet.add(str.trim());
+		        }
 		        
 				if(operation.equalsIgnoreCase("union")) {
 					resSet.addAll(he_resSet);

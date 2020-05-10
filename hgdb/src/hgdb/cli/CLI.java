@@ -359,6 +359,7 @@ public class CLI {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+		graph.close();
 		sc.close();
 	}
 	

@@ -4,3 +4,10 @@
 	"base_ids":["he_1", "he_2"],
 	"operation":"union"
 };
+
+{
+	"command":"create_nested_hyperedge",
+	"id":"nhe_1",
+	"base_ids":["he_1", "he_7"],
+	"operation":"union"
+};

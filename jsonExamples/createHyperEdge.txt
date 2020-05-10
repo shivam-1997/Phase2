@@ -26,28 +26,15 @@
 }
 ;
 
-// students under prof_0
+// students under prof_1
 {
    "command":"create_hyperedge",
    "id": "he_2",
-   "source_id":"prof_0",
-   "destination_type":"student",
-}
-;
-
-// students under prof_1 also connected to some other student
-{
-   "command":"create_hyperedge",
-   "id": "he_3",
    "source_id":"prof_1",
    "destination_type":"student",
-
-   "connected":{
-      "idOrType": "type",
-      "name": "student"
-   }
 }
 ;
+
 
 {
    "command":"create_hyperedge",
@@ -64,7 +51,7 @@
 
 {
    "command":"create_hyperedge",
-   "id": "he_5",
+   "id": "he_9",
    "source_id":"prof_1",
    "destination_type":"student",
 
@@ -73,9 +60,9 @@
       "name": "prof_2"
    }
 
-    "count": ["==", "3"],
-    "distance": ["operator", "value"]
-}
+    "count": [">=", "1"],
+
+    }
 ;
 
 {
@@ -100,5 +87,26 @@
    }
 
     "distance": ["==", "2"]
+}
+;
+
+
+
+
+{
+   "command":"create_hyperedge",
+   "id": "he_10",
+   "source_id":"prof_0",
+   "destination_type":"student",
+   "having":[ "cpi", ">", "9"]
+}
+;
+
+{
+   "command":"create_hyperedge",
+   "id": "he_20",
+   "source_id":"prof_2",
+   "destination_type":"student",
+   "having":[ "cpi", ">", "9"]
 }
 ;

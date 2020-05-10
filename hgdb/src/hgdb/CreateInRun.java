@@ -20,7 +20,7 @@ public class CreateInRun {
 		
  		public static void main(String[] args) {
 			
- 			if(folder.exists())	Utils.deleteFolder(folder);
+// 			if(folder.exists())	Utils.deleteFolder(folder);
  			
  			HyperGraph graph = HGEnvironment.get(databaseLocation);
  			
@@ -30,8 +30,9 @@ public class CreateInRun {
  			
 			ShowGraph.showGraph(graph);
  			cli.startCLI(graph);
- 			
+ 			print("Closing the graph");
  			graph.close();
 		}
 		
 }
+
