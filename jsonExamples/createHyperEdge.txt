@@ -110,3 +110,27 @@
    "having":[ "cpi", ">", "9"]
 }
 ;
+
+{
+"command":"create_hyperedge",
+"id": "he_11",
+"destination_type":"student",
+"having":[ "cpi", ">", "9"]
+}
+;
+
+{
+   "command":"create_hyperedge",
+   "id": "he_22",
+   "source_id":"proj_0",
+   "destination_type":"student",
+   
+}
+;
+
+{
+   "command":"create_hyperedge",
+   "id": "he_21",
+   "destination_type":"student",
+   
+};

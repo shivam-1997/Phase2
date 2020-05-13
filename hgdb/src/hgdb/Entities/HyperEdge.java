@@ -46,131 +46,8 @@ public class HyperEdge{
     public String getType() {
     	return (String) data.get("type");
     }
-
-   	public int trigger_function_simplest(HyperGraph graph) {
-		count = 0;
-		res = "";
-		Set<String> finalSet = new HashSet<String>(); 
-		long n_sources = Long.parseLong((String) data.get("n_sources"));
-		
-		for(long i=0; i< n_sources; i++) {
-			print("source id"+ i + ": "+data.get("source"+ i));
-	    	String source = (String) data.get("source"+ i);
-			
-			HGHandle sourceHandle = hg.findOne(graph, 
-									hg.and(
-											hg.type(Node.class),
-											hg.eq("id", source.trim())
-											)
-									);
-			
-			if(sourceHandle == null) {
-				print("No such source <"+ source+"> exists");
-				res = "";
-				count=0;
-				return -1;
-			}
-			
-//			Object sourceObject = graph.get(sourceHandle);
-//	        Node sourceNode = (Node)sourceObject;
-//		    print("The source is: "+ sourceNode.getId());
-			Set<String> resSet = new HashSet<String>(); 
 	
-		
-			try {
-				
-				HGALGenerator adjGen = new DefaultALGenerator(graph, null, null , true, true, false, false);
-				
-	//			Prof->Proj->Student
-				
-				HGTraversal trav= new HGDepthFirstTraversal(sourceHandle, adjGen);
-				String operator = (String) data.get("operator");
-		    	String attribute = (String) data.get("attribute");
-		    	String value = (String) data.get("value");
-		    	
-	//	    	print("destination->" + data.get("destination")+".");
-	//          print("attribute->" + attribute);
-	//	    	print("value->"+value);
-
-				while(trav.hasNext()){
-			        Pair<HGHandle, HGHandle> pair = trav.next();
-			        Object nextElement = graph.get(pair.getSecond());
-		            Node next = (Node)nextElement;
-//		            print(next.getData().get("type")+".");
-		            
-		            if(next.getData().get("type").equalsIgnoreCase((String) data.get("destination"))) {
-		            	
-		            	print(attribute + " of "+ data.get("destination") + " "+ next.getId()+": "+next.getData().get(attribute));
-		            	boolean found = false;
-				    	if(operator.equalsIgnoreCase(">")) {
-				    		if(Double.valueOf(next.getData().get(attribute)) > 
-				    		Double.valueOf(value)) {
-//				    			res += next.getData().get("name") +"\n";
-				    			found = true;
-				    		}
-				    	}
-				    	else if(operator.equalsIgnoreCase(">=")) {
-				    		if(Double.valueOf(next.getData().get(attribute)) >= Double.valueOf(value)) {
-//				    			res += next.getData().get("name") +"\n";
-				    			found = true;
-				    		}
-				    	}
-				    	else if(operator.equalsIgnoreCase("<")) {
-				    		if(Double.valueOf(next.getData().get(attribute)) <= Double.valueOf(value)) {
-//				    			res += next.getData().get("name") +"\n";
-				    			found = true;
-				    		}
-				    	}
-				    	else if(operator.equalsIgnoreCase("<=")) {
-				    		if(Double.valueOf(next.getData().get(attribute)) <= Double.valueOf(value)) {
-//				    			res += next.getData().get("name") +"\n";
-				    			found = true;
-				    		}
-				    	}
-				    	else if(operator.equalsIgnoreCase("!=") || operator.equalsIgnoreCase("<>")) {
-				    		if( next.getData().get(attribute) != value) {
-//				    			res += next.getData().get("name") +"\n";
-				    			found = true;
-				    		}
-				    	}
-				    	else if(operator.equalsIgnoreCase("=")) {
-				    		if( next.getData().get(attribute) == value) {
-//				    			res += next.getData().get("name") +"\n";
-				    			found = true;
-				    		}
-				    	}
-				    	else {
-				    		print("Invalid operator");
-				    		return -1;
-				    	}
-				    	if(found ) {
-				    		resSet.add(next.getData().get("name"));
-				    	}
-				    }
-			            
-			    }
-				if(i==0) {
-					finalSet.addAll(resSet);
-				}
-				else {
-					finalSet.retainAll(resSet);
-				}
-			    
-				
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		count = finalSet.size();
-		res = finalSet.toString();
-	    
-		print("done");
-		
-		return 0;
-	}
-	
-	public int trigger_function(HyperGraph graph) {
+    public int trigger_function(HyperGraph graph) {
 		
 		count = 0;
 		res = "";
@@ -203,8 +80,13 @@ public class HyperEdge{
 			 * therefore, the source will be the destination type node 
 			 */
 			source_id = destination_type;
-			sourceHandle = hg.findOne( graph, hg.and( hg.type(Type.class), hg.eq("id", destination_type)) );
+			sourceHandle = hg.findOne( graph, hg.and( hg.type(Table.class), hg.eq("name", destination_type)) );
+			if(sourceHandle == null) {
+				print("Source id not given and destination type is also not present");
+				return -1;
+			}
 		}
+		
 		
 //		start traversing	
 //		Prof->Proj->Student
@@ -227,8 +109,9 @@ public class HyperEdge{
 			    }
 		        Node next = (Node)nextElement;
 	//	        print(next.getData().get("type")+".");
-		            
-		        if(next.getData().get("type").equalsIgnoreCase(destination_type)) {		            	
+		        print("---------->Current node: " + next.getId()+" <----------");
+		        
+		        if(next.getType().equalsIgnoreCase(destination_type)) {		            	
 		        	//found the node matching the destination type
 /*
  * performing the comparison on the attributes of the node
@@ -342,7 +225,9 @@ public class HyperEdge{
 		catch (Exception e) {
 			res = "";
 			count = 0;
+			print("error in hyperedge trigger function");
 			e.printStackTrace();
+			
 		}
 		
 		res = resSet.toString();
@@ -354,6 +239,7 @@ public class HyperEdge{
 	public static void print(String message) {
 		System.out.println(message);
 	}
+
 /*
  * Setters and getters
  */
@@ -402,7 +288,7 @@ public class HyperEdge{
 
 
     	
-    	print(attribute + " of "+ data.get("destination") + " "+ node.getId()+": "+node.getData().get(attribute));
+    	print(attribute + " of "+ data.get("destination_type") + " "+ node.getId()+": "+node.getData().get(attribute));
     	boolean found = false;
     	if(operator.equalsIgnoreCase(">")) {
     		if(Double.valueOf(node.getData().get(attribute)) > 

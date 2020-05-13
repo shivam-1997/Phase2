@@ -1,5 +1,6 @@
 package hgdb.cli;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import org.hypergraphdb.HGEnvironment;
 import org.hypergraphdb.HGHandle;
 import org.hypergraphdb.HyperGraph;
 import org.hypergraphdb.algorithms.DefaultALGenerator;
@@ -21,6 +23,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.hypergraphdb.HGValueLink;
+import org.hypergraphdb.util.HGUtils;
 
 import hgdb.Utils;
 import hgdb.Entities.HyperEdge;
@@ -64,6 +67,8 @@ public class CLI {
 			HGHandle typeHandle = graph.add(tableNode);
 //			query to find the handle of the root node
 			HGHandle rootHandle = graph.findOne( hg.type(Root.class) );
+			if(rootHandle == null)
+				rootHandle = graph.add(new Root());
 //			adding a link from root node to type node
 			graph.add(new HGValueLink("root_type", rootHandle, typeHandle));
 //			if everything succeeds return 0
@@ -92,9 +97,492 @@ public class CLI {
 			return -1;
 		}
 	}
+	public int truncate_table(String tableName) {
+		try {
+			HGHandle typeHandle = graph.findOne( hg.and( hg.type(Table.class), hg.eq("name", tableName)));
+			HGALGenerator alGen = new DefaultALGenerator(graph,	//  HyperGraph hg
+														 hg.type(HGValueLink.class), // HGAtomPredicate linkPredicate
+														 null, //  hg.type(String.class), // HGAtomPredicate siblingPredicate
+														 false, // boolean returnPreceeding
+														 true,	// boolean returnSucceeding
+														 false	// boolean reverseOrder
+														 );
+			HGTraversal trav= new HGBreadthFirstTraversal(typeHandle, alGen, 2);
+			while(trav.hasNext()){
+				Pair<HGHandle, HGHandle> pair = trav.next();
+				
+				System.out.println("\nTraversing. Current word: " + graph.get(pair.getSecond()).getClass());
+				if(graph.get(pair.getSecond()).getClass() == Node.class) {
+					Node node = (Node)graph.get(pair.getSecond());
+					if(node.getType() == tableName) {
+						graph.remove(pair.getSecond(), false);						
+						print("\nRemoved: " + node.getId());
+					}
+				}
+			}
+			
+			return 0;
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return -1;
+		}
+	}
 	
+	
+	public int create_node(JSONObject json) {
+		try {
+			String tableName = (String) json.get("type");
+			HashMap<String, String> data = (HashMap<String, String>) json.get("values");
+			String id = (String) json.get("id");
+//			Node node = new Node(tableName, data.get(table.getKey()), data);
+			Node node = new Node(tableName, id, data);
+			HGHandle nodeHandle = graph.add(node);
+			
+			HGHandle tableHandle = graph.findOne(	
+					hg.and( 
+							hg.type(Table.class),
+							hg.eq("name", tableName)
+							)
+				);
+			if(tableHandle == null) {
+				/*
+				 * add a new type, not exists already
+				 */
+				print("No such type existed, adding now");
+				Table tableObj = new Table();
+				tableObj.setName(tableName);
+				tableHandle = graph.add(tableObj);
+//				query to find the handle of the root node
+				HGHandle rootHandle = graph.findOne( hg.type(Root.class) );
+				if(rootHandle == null)
+					rootHandle = graph.add(new Root());
+//				adding a link from root node to type node
+				graph.add(new HGValueLink("root_type", rootHandle, tableHandle));
+
+			}
+//			linking the node with the concerned parent table
+			graph.add(new HGValueLink("table_row", tableHandle, nodeHandle));			
+			print("Node added successfully");
+			return 0;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+	
+	public int create_edge(JSONObject json) {
+		try {
+			String label = (String) json.get("label");
+			
+			HashMap<String, String>
+			from = 	((HashMap<String, String>) json.get("from"));
+			String fromId = from.get("id");
+			HGHandle fromNodeHandle = graph.findOne(	
+					hg.and( 
+							hg.type(Node.class),
+							hg.eq("id", fromId)
+							)
+				);
+			if(fromNodeHandle == null) {
+				print("source node not available");
+				return -1;
+			}
+			print("source handle: "+ fromNodeHandle.toString());
+			HashMap<String, String>
+			to = 	((HashMap<String, String>) json.get("to"));
+			String toId = to.get("id");
+			HGHandle toNodeHandle = graph.findOne(	
+					hg.and( 
+							hg.type(Node.class),
+							hg.eq("id", toId)
+							)
+				);		
+			if(toNodeHandle == null) {
+				print("destination node not available");
+				return -1;
+			}
+			print("detination handle: "+toNodeHandle.toString());
+			HGValueLink link = new HGValueLink(label, fromNodeHandle, toNodeHandle); 
+			if(link == null) {
+				print("cannot create edge");
+				return -1;
+			}
+			
+			print("edge: "+link.toString());
+			graph.add( link);
+			print("Edge added successfully");
+			return 0;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return -1;
+		}
+	}
+
+	
+	public int processCommand( String command, JSONObject json) {
+
+		
+//		creating a node
+		if( command.equalsIgnoreCase("create_node")) {
+			return create_node(json);
+		}
+		else if(command.equalsIgnoreCase("create_edge")) {
+			return create_edge(json);
+		}
+//		creating table/type
+		else if(command.equalsIgnoreCase("create_table")) {
+			return create_type(json);
+		}
+//		deleting table/type
+		else if(command.equalsIgnoreCase("drop_table")) {
+			return drop_table( (String)json.get("name") );
+		}
+//		altering table
+		else if(command.equalsIgnoreCase("alter_table")) {
+			return alter_table(json);
+		}
+//		truncating table
+		else if(command.equalsIgnoreCase("truncate_table")) {
+			return truncate_table( (String)json.get("name") );
+		}
+//		inserting data into a table
+//		i.e, creating a node
+		else if(command.equalsIgnoreCase("insert")) {
+			return insert(json);
+		}
+//		updating the values of node(s)
+		else if(command.equalsIgnoreCase("update")) {
+			
+		}
+//		deleting node(s)
+		else if(command.equalsIgnoreCase("delete")) {
+			
+		}
+//		creating hyperedge
+		else if(command.equalsIgnoreCase("CREATE_HYPEREDGE")) {
+//			 creation of a new hyperedge
+//				command = "CREATE HYPEREDGE (123, (prof_2), student, cpi > 9);";
+//				CREATE HYPEREDGE (121, (prof_0, prof_2), student, cpi > 9);
+				if(CreateHyperEdge.createHyperEdge(graph, json)>=0) {
+				System.out.println("Successfully created the hyperedge");
+			}
+			else {
+				System.out.println("Error in hyperedge creation");
+			}	
+		}
+//		creating nested hyperedge
+		else if(command.equalsIgnoreCase("CREATE_NESTED_HYPEREDGE")) {
+			if(CreateHyperEdge.createNestedHyperEdge(graph, json) >= 0) {
+				System.out.println("Successfully created the nested-hyperedge");
+			}
+			else {
+				System.out.println("Error in nested-hyperedge creation");
+			}	
+		}
+		return 1;
+		
+	}
+	
+	public void startCLI(HyperGraph graph) {
+		
+		this.graph = graph;
+ 		print("\n Enter the commands\n");
+	    Scanner sc = new Scanner(System.in);
+		String sqlStmt = "";
+		try {
+
+			JSONParser parser = new JSONParser(); 
+			
+			while(true){
+				System.out.print("> ");
+				sqlStmt += sc.nextLine().trim();
+				// processing basic non-JSON commands
+				if(sqlStmt.isBlank()) {
+					continue;
+				}
+				if(sqlStmt.charAt(sqlStmt.length()-1)!=';') {
+					continue;
+				}
+				else {
+					sqlStmt = sqlStmt.replace(';', ' ');
+					sqlStmt = sqlStmt.trim();
+				}
+				
+				print("Statement: " + sqlStmt);
+				if(sqlStmt.equalsIgnoreCase("exit")) {
+					break;	
+				}
+				else if(sqlStmt.equalsIgnoreCase("create_graph")) {
+					createGraph(graph);
+					sqlStmt = "";
+					continue;
+					
+				}
+				else if(sqlStmt.equalsIgnoreCase("reset")) {
+					String databaseLocation = "databases/University/";
+//					File folder = new File(databaseLocation);
+					print("removing folder: " + databaseLocation);
+//					if(folder.exists())	
+//					Utils.deleteFolder(folder);
+					HGUtils.dropHyperGraphInstance(databaseLocation);
+					graph = HGEnvironment.get(databaseLocation); 
+					sqlStmt = "";
+					continue;
+				}
+				else if(sqlStmt.equalsIgnoreCase("show")) {
+					ShowGraph.showGraph(graph);
+					sqlStmt = "";
+					continue;
+				}
+				// process JSON commands
+				print("json: "+ sqlStmt);
+				JSONObject json = null;
+				try {					
+					json = (JSONObject) parser.parse(sqlStmt);
+					String command = (String) json.get("command");
+					
+					processCommand(command, json);
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				finally {
+					sqlStmt = "";
+				}
+			
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		graph.close();
+		sc.close();
+	}
+	
+
+	public static Map<String, HGHandle> studentHandles = new HashMap<String, HGHandle>(25000);
+	public static Map<String, HGHandle> profHandles = new HashMap<String, HGHandle>(1000);
+	public static Map<String, HGHandle> projHandles = new HashMap<String, HGHandle>(1000);
+	
+	public static void addStudents(String fileName,  HyperGraph graph)
+	{
+//		creating an object of Table class using the Json message
+		Table tableNode = new Table( "student", null, null, null, null, null);
+//		adding the type node to graph
+		HGHandle typeHandle = graph.add(tableNode);
+//		query to find the handle of the root node
+		HGHandle rootHandle = graph.findOne( hg.type(Root.class) );
+//		adding a link from root node to type node
+		graph.add(new HGValueLink("root_type", rootHandle, typeHandle));
+		
+	    // loading the file in the form of list of strings
+		List<String> lines = Utils.getAllLines(fileName); 
+
+	    // creating a list of Student objects
+	
+	    List<Node> students = new ArrayList<Node>();
+	    Iterator<String> itr = lines.iterator();
+	    while (itr.hasNext()) {
+	    	String nextLine = itr.next();
+	    	String[] arrOfStr = nextLine.split("\t", 3);
+	    	HashMap<String, String> data = new HashMap<String, String>();
+	    	data.put("type", "student");
+	    	data.put("roll", arrOfStr[0].trim());
+	    	data.put("name", arrOfStr[0].trim());
+	    	data.put("gender", arrOfStr[1].trim());
+	    	data.put("cpi", arrOfStr[2].trim());
+	    	Node student = new Node("student", arrOfStr[0].trim(), data);
+	    	students.add(student);
+	    }
+	    
+	    // importing the student objects in the graph
+	    Iterator<Node> students_itr = students.iterator();
+	    int i=0;
+	    long start_time = System.nanoTime();
+	    
+	    while (students_itr.hasNext()) {
+	    	if(i%1000 == 0)	System.out.print(i+"...");
+    		Node obj = students_itr.next();
+    		HGHandle nodeHandle = graph.add(obj);
+    		graph.add(new HGValueLink("type_node", typeHandle, nodeHandle));
+
+    		studentHandles.put(obj.getData().get("name"), nodeHandle);
+    		
+	    	i+=1;
+	    }
+	    long end_time = System.nanoTime();
+	    long time_taken = (long) ((end_time- start_time)/1000000000.00);
+		System.out.println(i+" students imported");
+		System.out.println("import of nodes took "+ time_taken + "s.");
+	    
+	 } 
+
+	public static void addProfs(String fileName,  HyperGraph graph)
+	{ 
+//		creating an object of Table class using the Json message
+		Table tableNode = new Table( "professor", null, null, null, null, null);
+//		adding the type node to graph
+		HGHandle typeHandle = graph.add(tableNode);
+//		query to find the handle of the root node
+		HGHandle rootHandle = graph.findOne( hg.type(Root.class) );
+//		adding a link from root node to type node
+		graph.add(new HGValueLink("root_type", rootHandle, typeHandle));
+
+	    // loading the file in the form of list of strings
+		List<String> lines = Utils.getAllLines(fileName); 
+
+	    // creating a list of Student objects
+		
+	    List<Node> profs = new ArrayList<Node>();
+	    Iterator<String> itr = lines.iterator();
+	    while (itr.hasNext()) {
+	    	String nextLine = itr.next();
+	    	String[] arrOfStr = nextLine.split("\t", 2);
+	    	
+	    	HashMap<String, String> data = new HashMap<String, String>();
+	    	data.put("type", "professor");
+	    	data.put("roll", arrOfStr[0].trim());
+	    	data.put("name", arrOfStr[0].trim());
+	    	data.put("gender", arrOfStr[1].trim());
+	    	
+	    	Node prof = new Node("professor", arrOfStr[0].trim(), data);
+	    	profs.add(prof);
+	    }
+	    
+	    // importing the objects in database
+	    Iterator<Node> profs_itr = profs.iterator();
+	    int i=0;
+	    long start_time = System.nanoTime();
+	    while (profs_itr.hasNext()) {
+	    	if(i%1000 == 0)	System.out.print(i+"...");
+    		Node obj = profs_itr.next();
+
+    		HGHandle nodeHandle = graph.add(obj);
+    		graph.add(new HGValueLink("type_node", typeHandle, nodeHandle));
+
+    		profHandles.put(obj.getData().get("name"), nodeHandle);
+	    	i+=1;
+	    }
+	    long end_time = System.nanoTime();
+	    long time_taken = (long) ((end_time- start_time)/1000000.0);
+		System.out.println(i+" profs imported");
+		System.out.println("import of nodes took "+ time_taken + "ms.");
+	}
+	
+	public static void addProjs(String fileName,  HyperGraph graph)
+	{ 
+//		creating an object of Table class using the Json message
+		Table tableNode = new Table( "project", null, null, null, null, null);
+//		adding the type node to graph
+		HGHandle typeHandle = graph.add(tableNode);
+//		query to find the handle of the root node
+		HGHandle rootHandle = graph.findOne( hg.type(Root.class) );
+//		adding a link from root node to type node
+		graph.add(new HGValueLink("root_type", rootHandle, typeHandle));
+
+	    // loading the file in the form of list of strings
+		List<String> lines = Utils.getAllLines(fileName); 
+
+	    // creating a list of Project objects
+		
+	    List<Node> projs = new ArrayList<Node>();
+	    Iterator<String> itr = lines.iterator();
+	    while (itr.hasNext()) {
+	    	String nextLine = itr.next();
+	    	HashMap<String, String> data = new HashMap<String, String>();
+	    	data.put("type", "project");
+	    	data.put("name", nextLine.trim());
+	    	
+	    	Node proj = new Node("project", nextLine.trim(), data);
+	    	projs.add(proj);
+	    }
+	    
+	    // importing the objects in database
+	    Iterator<Node> projs_itr = projs.iterator();
+	    int i=0;
+	    long start_time = System.nanoTime();
+	    while (projs_itr.hasNext()) {
+	    	if(i%1000 == 0)	System.out.print(i+"...");
+    		Node obj = projs_itr.next();
+    		
+       		HGHandle nodeHandle = graph.add(obj);
+    		graph.add(new HGValueLink("type_node", typeHandle, nodeHandle));
+    		
+    		projHandles.put(obj.getData().get("name"), nodeHandle);
+	    	i+=1;
+	    }
+	    long end_time = System.nanoTime();
+	    long time_taken = (long) ((end_time- start_time)/1000000.0);
+		System.out.println(i+" projects imported");
+		System.out.println("import of nodes took "+ time_taken + "ms.");
+	}
+ 	
+	public static void addRelations(HyperGraph graph)
+	{
+		// loading the file in the form of list of strings
+		List<String> st_proj_lines = Utils.getAllLines("dataset/student_proj_relations.txt");
+		List<String> prof_proj_lines = Utils.getAllLines("dataset/prof_proj_relations.txt");
+		System.out.println("importing relations");
+		// importing the relations
+		Iterator<String> st_proj_itr = st_proj_lines.iterator();
+		Iterator<String> prof_proj_itr = prof_proj_lines.iterator();
+		int i=0;
+		HGHandle handle1, handle2;
+
+		long start_time = System.nanoTime();
+	    
+		while(st_proj_itr.hasNext()) {
+			String line = st_proj_itr.next();
+			String[] arrOfStr = line.split("\t", 2); 
+			handle1 = studentHandles.get(arrOfStr[0]); // student
+			handle2 = projHandles.get(arrOfStr[1]);	// project
+//			System.out.println(handle1 + " " + handle2);
+			graph.add(new HGValueLink("student_proj", handle2, handle1));
+			i++;
+		}
+		while(prof_proj_itr.hasNext()) {
+			String line = prof_proj_itr.next();
+			String[] arrOfStr = line.split("\t", 2); 
+			handle1 = profHandles.get(arrOfStr[0]);
+			handle2 = projHandles.get(arrOfStr[1]);
+			graph.add(new HGValueLink("prof_proj", handle1, handle2));
+			i++;
+		}
+		
+		
+		long end_time = System.nanoTime();
+	    long time_taken = (long) ((end_time- start_time)/1000000000.00);
+	    
+//		
+////		HGHandle duplicateLink = graph.add(new HGPlainLink(handle1, handle2));
+//        List<HGHandle> dupsList = hg.findAll(graph, hg.link(handle1, handle2));
+//        System.out.println("querying for link returned that duplicate Link? :" + dupsList.contains(duplicateLink));
+		System.out.println(i+" Relations imported");
+		System.out.println("import of relations took "+ time_taken + "s.");
+	    
+	}
+	
+ 			
+	public void createGraph(HyperGraph graph) {
+		
+		HGHandle rootHandle = graph.findOne( hg.type(Root.class) );
+		if(rootHandle == null)
+			rootHandle = graph.add(new Root());
+		addStudents("dataset/students.txt", graph);
+		addProfs("dataset/profs.txt", graph);
+		addProjs("dataset/projects.txt", graph);
+			    
+		addRelations(graph);
+		System.out.println("Graph created");
+	}
 	
 	/*
+	 * to be completed
+	 *//*
 	 * to be completed
 	 * all the nodes under concerned table should reflect the new columns
 	 */
@@ -133,38 +621,6 @@ public class CLI {
 		}
 	}
 
-	public int truncate_table(String tableName) {
-		try {
-			HGHandle typeHandle = graph.findOne( hg.and( hg.type(Table.class), hg.eq("name", tableName)));
-			HGALGenerator alGen = new DefaultALGenerator(graph,	//  HyperGraph hg
-														 hg.type(HGValueLink.class), // HGAtomPredicate linkPredicate
-														 null, //  hg.type(String.class), // HGAtomPredicate siblingPredicate
-														 false, // boolean returnPreceeding
-														 true,	// boolean returnSucceeding
-														 false	// boolean reverseOrder
-														 );
-			HGTraversal trav= new HGBreadthFirstTraversal(typeHandle, alGen, 2);
-			while(trav.hasNext()){
-				Pair<HGHandle, HGHandle> pair = trav.next();
-				
-				System.out.println("\nTraversing. Current word: " + graph.get(pair.getSecond()).getClass());
-				if(graph.get(pair.getSecond()).getClass() == Node.class) {
-					Node node = (Node)graph.get(pair.getSecond());
-					if(node.getType() == tableName) {
-						graph.remove(pair.getSecond(), false);						
-						print("\nRemoved: " + node.getId());
-					}
-				}
-			}
-			
-			return 0;
-		}
-		catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return -1;
-		}
-	}
 	
 	public int insert(JSONObject json) {
 		try {
@@ -240,349 +696,6 @@ public class CLI {
 			return -1;
 		}
 	}
-	
-	public int processCommand( String command, JSONObject json) {
-//		creating table/type
-		if(command.equalsIgnoreCase("create_table")) {
-			return create_type(json);
-		}
-//		deleting table/type
-		else if(command.equalsIgnoreCase("drop_table")) {
-			return drop_table( (String)json.get("name") );
-		}
-//		altering table
-		else if(command.equalsIgnoreCase("alter_table")) {
-			return alter_table(json);
-		}
-//		truncating table
-		else if(command.equalsIgnoreCase("truncate_table")) {
-			return truncate_table( (String)json.get("name") );
-		}
-//		inserting data into a table
-//		i.e, creating a node
-		else if(command.equalsIgnoreCase("insert")) {
-			return insert(json);
-		}
-//		updating the values of node(s)
-		else if(command.equalsIgnoreCase("update")) {
-			
-		}
-//		deleting node(s)
-		else if(command.equalsIgnoreCase("delete")) {
-			
-		}
-//		creating hyperedge
-		else if(command.equalsIgnoreCase("CREATE_HYPEREDGE")) {
-//			 creation of a new hyperedge
-//				command = "CREATE HYPEREDGE (123, (prof_2), student, cpi > 9);";
-//				CREATE HYPEREDGE (121, (prof_0, prof_2), student, cpi > 9);
-				if(CreateHyperEdge.createHyperEdge(graph, json)>=0) {
-				System.out.println("Successfully created the hyperedge");
-			}
-			else {
-				System.out.println("Error in hyperedge creation");
-			}	
-		}
-//		creating nested hyperedge
-		else if(command.equalsIgnoreCase("CREATE_NESTED_HYPEREDGE")) {
-			if(CreateHyperEdge.createNestedHyperEdge(graph, json) >= 0) {
-				System.out.println("Successfully created the nested-hyperedge");
-			}
-			else {
-				System.out.println("Error in nested-hyperedge creation");
-			}	
-		}
-		return 1;
-		
-	}
-	
-	public void startCLI(HyperGraph graph) {
-		
-		this.graph = graph;
- 		print("\n Enter the commands\n");
-	    Scanner sc = new Scanner(System.in);
-		String sqlStmt = "";
-		try {
 
-			JSONParser parser = new JSONParser(); 
-			
-			while(true){
-				System.out.print("> ");
-				sqlStmt += sc.nextLine().trim();
-				if(sqlStmt.isBlank()) {
-					continue;
-				}
-				if(sqlStmt.charAt(sqlStmt.length()-1)!=';') {
-					continue;
-				}
-				else {
-					sqlStmt = sqlStmt.replace(';', ' ');
-					sqlStmt = sqlStmt.trim();
-				}
-				
-				print("Statement: " + sqlStmt);
-				if(sqlStmt.equalsIgnoreCase("exit")) {
-					break;
-				}
-				else if(sqlStmt.equalsIgnoreCase("show")) {
-					ShowGraph.showGraph(graph);
-					sqlStmt = "";
-					continue;
-				}
-				print("json: "+ sqlStmt);
-				JSONObject json = null;
-				try {					
-					json = (JSONObject) parser.parse(sqlStmt);
-					/*
-					String[] arr = sqlStmt.split(" ");
-					String command = arr[0].trim();
-
-					if(command.equalsIgnoreCase("exit")) {
-						break;
-					}
-					processCommand(command, sqlStmt);
-					command="";
-				*/
-					String command = (String) json.get("command");
-					
-					processCommand(command, json);
-				}
-				catch (Exception e) {
-					e.printStackTrace();
-				}
-				finally {
-					sqlStmt = "";
-				}
-			
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		graph.close();
-		sc.close();
-	}
-	
-	
-
-	public static Map<String, HGHandle> studentHandles = new HashMap<String, HGHandle>(25000);
-	public static Map<String, HGHandle> profHandles = new HashMap<String, HGHandle>(1000);
-	public static Map<String, HGHandle> projHandles = new HashMap<String, HGHandle>(1000);
-	
-	public static void addStudents(String fileName,  HyperGraph graph)
-	{
-//		creating an object of Table class using the Json message
-		Table tableNode = new Table( "Student", null, null, null, null, null);
-//		adding the type node to graph
-		HGHandle typeHandle = graph.add(tableNode);
-//		query to find the handle of the root node
-		HGHandle rootHandle = graph.findOne( hg.type(Root.class) );
-//		adding a link from root node to type node
-		graph.add(new HGValueLink("root_type", rootHandle, typeHandle));
-		
-	    // loading the file in the form of list of strings
-		List<String> lines = Utils.getAllLines(fileName); 
-
-	    // creating a list of Student objects
-	
-	    List<Node> students = new ArrayList<Node>();
-	    Iterator<String> itr = lines.iterator();
-	    while (itr.hasNext()) {
-	    	String nextLine = itr.next();
-	    	String[] arrOfStr = nextLine.split("\t", 3);
-	    	HashMap<String, String> data = new HashMap<String, String>();
-	    	data.put("type", "student");
-	    	data.put("roll", arrOfStr[0].trim());
-	    	data.put("name", arrOfStr[0].trim());
-	    	data.put("gender", arrOfStr[1].trim());
-	    	data.put("cpi", arrOfStr[2].trim());
-	    	Node student = new Node();
-	    	student.setData(data);
-	    	student.setId(arrOfStr[0].trim());
-	    	students.add(student);
-	    }
-	    
-	    // importing the student objects in the graph
-	    Iterator<Node> students_itr = students.iterator();
-	    int i=0;
-	    long start_time = System.nanoTime();
-	    
-	    while (students_itr.hasNext()) {
-	    	if(i%1000 == 0)	System.out.print(i+"...");
-    		Node obj = students_itr.next();
-    		
-    		HGHandle nodeHandle = graph.add(obj);
-    		graph.add(new HGValueLink("type_node", typeHandle, nodeHandle));
-
-    		studentHandles.put(obj.getData().get("name"), nodeHandle);
-    		
-	    	i+=1;
-	    }
-	    long end_time = System.nanoTime();
-	    long time_taken = (long) ((end_time- start_time)/1000000000.00);
-		System.out.println(i+" students imported");
-		System.out.println("import of nodes took "+ time_taken + "s.");
-	    
-	 } 
-
-	public static void addProfs(String fileName,  HyperGraph graph)
-	{ 
-//		creating an object of Table class using the Json message
-		Table tableNode = new Table( "Professor", null, null, null, null, null);
-//		adding the type node to graph
-		HGHandle typeHandle = graph.add(tableNode);
-//		query to find the handle of the root node
-		HGHandle rootHandle = graph.findOne( hg.type(Root.class) );
-//		adding a link from root node to type node
-		graph.add(new HGValueLink("root_type", rootHandle, typeHandle));
-
-	    // loading the file in the form of list of strings
-		List<String> lines = Utils.getAllLines(fileName); 
-
-	    // creating a list of Student objects
-		
-	    List<Node> profs = new ArrayList<Node>();
-	    Iterator<String> itr = lines.iterator();
-	    while (itr.hasNext()) {
-	    	String nextLine = itr.next();
-	    	String[] arrOfStr = nextLine.split("\t", 2);
-	    	
-	    	HashMap<String, String> data = new HashMap<String, String>();
-	    	data.put("type", "professor");
-	    	data.put("roll", arrOfStr[0].trim());
-	    	data.put("name", arrOfStr[0].trim());
-	    	data.put("gender", arrOfStr[1].trim());
-	    	
-	    	Node prof = new Node();
-	    	prof.setData(data);
-	    	prof.setId(arrOfStr[0].trim());
-	    	profs.add(prof);
-	    }
-	    
-	    // importing the objects in database
-	    Iterator<Node> profs_itr = profs.iterator();
-	    int i=0;
-	    long start_time = System.nanoTime();
-	    while (profs_itr.hasNext()) {
-	    	if(i%1000 == 0)	System.out.print(i+"...");
-    		Node obj = profs_itr.next();
-
-    		HGHandle nodeHandle = graph.add(obj);
-    		graph.add(new HGValueLink("type_node", typeHandle, nodeHandle));
-
-    		profHandles.put(obj.getData().get("name"), nodeHandle);
-	    	i+=1;
-	    }
-	    long end_time = System.nanoTime();
-	    long time_taken = (long) ((end_time- start_time)/1000000.0);
-		System.out.println(i+" profs imported");
-		System.out.println("import of nodes took "+ time_taken + "ms.");
-	}
-	
-	public static void addProjs(String fileName,  HyperGraph graph)
-	{ 
-//		creating an object of Table class using the Json message
-		Table tableNode = new Table( "Project", null, null, null, null, null);
-//		adding the type node to graph
-		HGHandle typeHandle = graph.add(tableNode);
-//		query to find the handle of the root node
-		HGHandle rootHandle = graph.findOne( hg.type(Root.class) );
-//		adding a link from root node to type node
-		graph.add(new HGValueLink("root_type", rootHandle, typeHandle));
-
-	    // loading the file in the form of list of strings
-		List<String> lines = Utils.getAllLines(fileName); 
-
-	    // creating a list of Project objects
-		
-	    List<Node> projs = new ArrayList<Node>();
-	    Iterator<String> itr = lines.iterator();
-	    while (itr.hasNext()) {
-	    	String nextLine = itr.next();
-	    	HashMap<String, String> data = new HashMap<String, String>();
-	    	data.put("type", "project");
-	    	data.put("name", nextLine.trim());
-	    	
-	    	Node proj = new Node();
-	    	proj.setData(data);
-	    	proj.setId(nextLine.trim());
-	    	projs.add(proj);
-	    }
-	    
-	    // importing the objects in database
-	    Iterator<Node> projs_itr = projs.iterator();
-	    int i=0;
-	    long start_time = System.nanoTime();
-	    while (projs_itr.hasNext()) {
-	    	if(i%1000 == 0)	System.out.print(i+"...");
-    		Node obj = projs_itr.next();
-    		
-       		HGHandle nodeHandle = graph.add(obj);
-    		graph.add(new HGValueLink("type_node", typeHandle, nodeHandle));
-    		
-    		projHandles.put(obj.getData().get("name"), nodeHandle);
-	    	i+=1;
-	    }
-	    long end_time = System.nanoTime();
-	    long time_taken = (long) ((end_time- start_time)/1000000.0);
-		System.out.println(i+" projects imported");
-		System.out.println("import of nodes took "+ time_taken + "ms.");
-	}
- 	
-	public static void addRelations(HyperGraph graph)
-	{
-		// loading the file in the form of list of strings
-		List<String> st_proj_lines = Utils.getAllLines("dataset/student_proj_relations.txt");
-		List<String> prof_proj_lines = Utils.getAllLines("dataset/prof_proj_relations.txt");
-		System.out.println("importing relations");
-		// importing the relations
-		Iterator<String> st_proj_itr = st_proj_lines.iterator();
-		Iterator<String> prof_proj_itr = prof_proj_lines.iterator();
-		int i=0;
-		HGHandle handle1, handle2;
-
-		long start_time = System.nanoTime();
-	    
-		while(st_proj_itr.hasNext()) {
-			String line = st_proj_itr.next();
-			String[] arrOfStr = line.split("\t", 2); 
-			handle1 = studentHandles.get(arrOfStr[0]); // student
-			handle2 = projHandles.get(arrOfStr[1]);	// project
-//			System.out.println(handle1 + " " + handle2);
-			graph.add(new HGValueLink("student_proj", handle2, handle1));
-			i++;
-		}
-		while(prof_proj_itr.hasNext()) {
-			String line = prof_proj_itr.next();
-			String[] arrOfStr = line.split("\t", 2); 
-			handle1 = profHandles.get(arrOfStr[0]);
-			handle2 = projHandles.get(arrOfStr[1]);
-			graph.add(new HGValueLink("prof_proj", handle1, handle2));
-			i++;
-		}
-		
-		
-		long end_time = System.nanoTime();
-	    long time_taken = (long) ((end_time- start_time)/1000000000.00);
-	    
-//		
-////		HGHandle duplicateLink = graph.add(new HGPlainLink(handle1, handle2));
-//        List<HGHandle> dupsList = hg.findAll(graph, hg.link(handle1, handle2));
-//        System.out.println("querying for link returned that duplicate Link? :" + dupsList.contains(duplicateLink));
-		System.out.println(i+" Relations imported");
-		System.out.println("import of relations took "+ time_taken + "s.");
-	    
-	}
- 			
-	public void createGraph(HyperGraph graph) {
-		
-		graph.add(new Root());
-		addStudents("dataset/students.txt", graph);
-		addProfs("dataset/profs.txt", graph);
-		addProjs("dataset/projects.txt", graph);
-			    
-		addRelations(graph);
-		System.out.println("Graph created");
-	}
 
 }

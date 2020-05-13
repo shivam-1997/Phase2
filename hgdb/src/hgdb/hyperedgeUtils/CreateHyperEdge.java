@@ -160,6 +160,7 @@ public class CreateHyperEdge {
 		}
 		catch (Exception e) {
 			// TODO: handle exception
+			print("error in hyperedge trigger: ");
 			e.printStackTrace();
 			return -1;
 		}

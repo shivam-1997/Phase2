@@ -11,16 +11,7 @@ public class Table {
     public String getName() {
     	return name;
     }
-	
-    
-//    int attrCount;
-//    public void setAttrCount(int count) {
-//		attrCount = count;
-//	}
-//    public int getAttrCount() {
-//    	return attrCount;
-//    }
-	
+
 	HashMap<String, String> attributes;
 	public void setAttributes(HashMap<String, String> data) {
 		this.attributes = data;

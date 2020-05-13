@@ -1,0 +1,28 @@
+// creating a node
+
+{
+   "command":"create_node",
+   "type":"student",
+   "id": "st_10",
+   "values":
+      {
+         "name": "st_10",
+         "cpi":"9.5",
+         "gender": "m"
+      }
+};
+
+
+{
+   "command":"create_edge",
+   "label":"proj_stud",
+   "from":{
+      "type": "project",
+      "id": "proj_0"
+   },
+
+   "to":  {
+      "type": "student",
+      "id": "st_10"
+   }
+};
